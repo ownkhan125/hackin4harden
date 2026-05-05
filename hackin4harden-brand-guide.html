@@ -1,0 +1,1473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hackin' 4 Harden — Official Brand Guidelines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Midnight Navy — extracted from the golfer silhouette in the official logo */
+  --obs-950:#11192B;
+  --obs-900:#1B2A40;
+  --obs-850:#1F2F47;
+  --obs-800:#243450;
+  --obs-700:#2D3F5C;
+  --obs-600:#3B4D6B;
+
+  /* Augusta Green — extracted from the "Harden" script wordmark
+     and Masters Gold — extracted from the arched "HACKIN' FOR" text */
+  --cyan-300:#5BB46A;   /* Augusta green light */
+  --cyan-400:#2E7D3F;   /* Augusta green — primary brand accent */
+  --cyan-500:#1F5C2C;   /* Augusta green deep */
+  --cyan-600:#16461F;   /* Augusta green deepest */
+  --amber-400:#D9A53A;  /* Masters gold light */
+  --amber-500:#C28A20;  /* Masters gold — secondary brand accent */
+  --amber-600:#9C6E15;  /* Masters gold deep */
+  --amber-700:#7A5610;  /* Masters gold deepest */
+  --crimson:#C8362B;    /* Flag crimson — extracted from the pin in the logo */
+  --lab-lime:#7FB069;   /* Fairway sage — utility lighter green */
+  --violet:#8B5CF6;     /* legacy — unused on surfaces */
+
+  /* Tournament Cream — extracted from the logo's natural paper feel */
+  --bone-50:#FAF6EC;
+  --bone-100:#F0E9D6;
+  --bone-200:#E2DAC4;
+  --mesh-200:#D7CDB5;
+  --mesh-300:#B8AC91;
+  --mesh-400:#8B8169;
+  --mesh-500:#6B6253;
+  --mesh-600:#4D453A;
+  --mesh-700:#2F2A22;
+  --mesh-800:#1F1B14;
+
+  /* Surface tokens */
+  --paper:#F5EFE2;
+  --hairline:rgba(46,125,63,.22);            /* green hairline */
+  --hairline-bone:rgba(27,42,64,.10);
+  --grid:rgba(194,138,32,.06);               /* gold grid on dark */
+
+  /* Type families */
+  --ff-display:'Space Grotesk',sans-serif;
+  --ff-body:'Inter',sans-serif;
+  --ff-mono:'JetBrains Mono',monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:#0A1424;
+  font-family:var(--ff-body);
+  color:var(--mesh-600);
+  padding:40px 20px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+@media(max-width:760px){body{padding:14px}}
+
+/* ─── PAGE SHELL ─────────────────────────────────────────── */
+.page{
+  width:100%;
+  max-width:1240px;
+  min-height:1480px;
+  margin:0 auto 36px;
+  background:var(--paper);
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 60px 140px rgba(0,0,0,.7),0 0 0 1px rgba(46,125,63,.06);
+  border-radius:6px;
+}
+.page.dark{background:var(--obs-900);color:var(--bone-100)}
+.page.dark::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image:radial-gradient(var(--grid) 1px,transparent 1px);
+  background-size:32px 32px;
+  background-position:0 0;
+  pointer-events:none;
+  opacity:.6;
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 75%);
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 75%);
+}
+.page-inner{padding:96px 96px 130px;position:relative;min-height:inherit;z-index:2}
+@media(max-width:760px){.page-inner{padding:56px 28px 100px}}
+
+/* Section number watermark */
+.section-number{
+  position:absolute;top:74px;right:96px;
+  font-family:var(--ff-display);font-weight:700;
+  font-size:172px;line-height:1;letter-spacing:-.06em;
+  color:rgba(31,36,46,.05);
+  pointer-events:none;
+}
+.page.dark .section-number{color:rgba(194,138,32,.10)}
+@media(max-width:760px){.section-number{font-size:96px;top:30px;right:28px}}
+
+/* Section header */
+.section-header{margin-bottom:56px;max-width:780px;position:relative;z-index:3}
+.section-label{
+  font-family:var(--ff-mono);font-weight:600;font-size:11px;
+  letter-spacing:.26em;text-transform:uppercase;
+  color:var(--cyan-600);
+  margin-bottom:22px;display:inline-flex;align-items:center;gap:14px;
+}
+.page.dark .section-label{color:var(--cyan-400)}
+.section-label::before{content:"";width:48px;height:1px;background:currentColor}
+.section-title{
+  font-family:var(--ff-display);font-weight:700;
+  font-size:clamp(40px,5.4vw,68px);
+  line-height:.98;letter-spacing:-.025em;
+  color:var(--obs-900);margin-bottom:22px;
+}
+.page.dark .section-title{color:var(--bone-50)}
+.section-title em{
+  font-style:normal;color:var(--cyan-500);font-weight:500;
+}
+.page.dark .section-title em{color:var(--cyan-400)}
+.section-desc{
+  font-family:var(--ff-body);font-size:17px;line-height:1.7;
+  color:var(--mesh-600);max-width:64ch;
+}
+.page.dark .section-desc{color:rgba(241,240,234,.72)}
+
+/* Page footer */
+.page-footer{
+  position:absolute;bottom:48px;left:96px;right:96px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;
+  font-family:var(--ff-mono);font-size:10px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mesh-400);
+  padding-top:22px;border-top:1px solid var(--hairline-bone);
+}
+.page.dark .page-footer{color:rgba(241,240,234,.45);border-top-color:rgba(194,138,32,.20)}
+.page-footer .pf-mark{display:inline-flex;align-items:center;gap:10px}
+.page-footer .pf-mark .dot{width:6px;height:6px;background:var(--cyan-400);border-radius:50%;box-shadow:0 0 14px rgba(46,125,63,.55)}
+.page.dark .page-footer .pf-mark .dot{background:var(--amber-500);box-shadow:0 0 14px rgba(194,138,32,.55)}
+@media(max-width:760px){.page-footer{left:28px;right:28px;bottom:30px;flex-direction:column;align-items:flex-start;gap:8px}}
+
+/* Note box */
+.note-box{
+  margin-top:48px;padding:28px 32px;
+  background:var(--obs-900);color:var(--bone-100);
+  border-left:4px solid var(--cyan-400);
+  border-radius:4px;font-size:15px;line-height:1.7;
+  max-width:920px;
+  position:relative;
+}
+.note-box::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,rgba(194,138,32,.10),transparent 40%);
+  pointer-events:none;border-radius:4px;
+}
+.note-box strong{color:var(--cyan-400);font-weight:600}
+.page.dark .note-box{background:var(--obs-800)}
+
+/* ─── COVER ─────────────────────────────────────────────── */
+.cover{
+  background:radial-gradient(1100px 700px at 78% 12%,rgba(194,138,32,.20),transparent 60%),
+             radial-gradient(800px 500px at 18% 88%,rgba(46,125,63,.18),transparent 60%),
+             linear-gradient(180deg,var(--obs-950),var(--obs-900) 60%,#0E1828);
+  color:var(--bone-50);min-height:1500px;display:flex;align-items:center;
+}
+.cover::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(circle at 50% 40%,#000,transparent 75%);
+  -webkit-mask-image:radial-gradient(circle at 50% 40%,#000,transparent 75%);
+  pointer-events:none;
+}
+.cover-corner{position:absolute;top:24px;left:24px;width:130px;height:130px;border-top:2px solid var(--amber-500);border-left:2px solid var(--amber-500);opacity:.85}
+.cover-corner-br{position:absolute;bottom:24px;right:24px;width:130px;height:130px;border-bottom:2px solid var(--amber-500);border-right:2px solid var(--amber-500);opacity:.85}
+.cover-stripe{position:absolute;top:0;bottom:0;right:60px;width:1px;background:linear-gradient(180deg,transparent,var(--hairline) 30%,var(--hairline) 70%,transparent)}
+.cover-rule{width:120px;height:3px;background:var(--amber-500);margin-bottom:30px;box-shadow:0 0 24px rgba(194,138,32,.55)}
+.cover-subtitle{font-family:var(--ff-mono);font-weight:600;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--amber-500);margin-bottom:38px}
+.cover-title{
+  font-family:var(--ff-display);font-weight:700;
+  font-size:clamp(64px,11.5vw,180px);
+  line-height:.86;letter-spacing:-.045em;
+  color:var(--bone-50);
+}
+.cover-title .accent{color:var(--amber-500);font-weight:500}
+.cover-title .stroke{
+  -webkit-text-stroke:1.5px var(--amber-500);
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+}
+.cover-tag{margin-top:34px;font-family:var(--ff-mono);font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:rgba(241,240,234,.65)}
+.cover-meta{margin-top:96px;display:flex;gap:64px;flex-wrap:wrap;border-top:1px solid var(--hairline);padding-top:36px;max-width:880px}
+.cover-meta-item{font-family:var(--ff-mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(241,240,234,.5)}
+.cover-meta-item span{display:block;font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--amber-500);margin-top:8px;letter-spacing:-.01em;text-transform:none}
+.cover-watermark{
+  position:absolute;bottom:-90px;left:48px;
+  font-family:var(--ff-display);font-weight:700;font-size:340px;line-height:.78;
+  color:rgba(194,138,32,.04);letter-spacing:-.06em;pointer-events:none;
+}
+.cover-bracket{
+  position:absolute;top:60px;right:96px;
+  font-family:var(--ff-mono);font-size:13px;letter-spacing:.18em;
+  color:var(--amber-500);
+}
+.cover-bracket span{color:rgba(241,240,234,.45)}
+@media(max-width:760px){.cover-meta{gap:30px}.cover-bracket{right:28px;top:30px}.cover-watermark{font-size:160px}}
+
+/* ─── TOC ───────────────────────────────────────────────── */
+.toc-wrap{max-width:840px}
+.toc-row{display:flex;justify-content:space-between;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--mesh-200)}
+.toc-row:last-child{border-bottom:0}
+.toc-row .t{font-family:var(--ff-display);font-weight:600;font-size:23px;color:var(--obs-900);letter-spacing:-.012em}
+.toc-row .d{flex:1;margin:0 26px;border-bottom:1px dotted var(--mesh-300);height:1px;transform:translateY(-6px)}
+.toc-row .n{font-family:var(--ff-mono);font-size:12px;color:var(--mesh-400);letter-spacing:.16em}
+
+/* ─── PRINCIPLES / GENERIC CARD GRID ───────────────────── */
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:8px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:8px}
+@media(max-width:960px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+.card{
+  background:#fff;
+  border:1px solid var(--mesh-200);
+  border-radius:6px;padding:34px;position:relative;
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.card::before{content:"";position:absolute;top:0;left:34px;right:34px;height:2px;background:var(--cyan-500)}
+.card:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(11,18,32,.08)}
+.card .meta{font-family:var(--ff-mono);font-size:11px;color:var(--cyan-600);letter-spacing:.18em;font-weight:600;text-transform:uppercase}
+.card h3{font-family:var(--ff-display);font-weight:600;font-size:23px;color:var(--obs-900);margin:14px 0 12px;letter-spacing:-.018em}
+.card p{font-size:14.5px;color:var(--mesh-500);line-height:1.7}
+.card.dark{background:var(--obs-800);border-color:var(--obs-700)}
+.card.dark h3{color:var(--bone-50)}
+.card.dark p{color:rgba(241,240,234,.7)}
+.card.dark::before{background:var(--cyan-400)}
+.card .hash{
+  position:absolute;top:18px;right:24px;
+  font-family:var(--ff-mono);font-size:11px;color:var(--mesh-400);
+  letter-spacing:.18em;font-weight:600;
+}
+
+/* Persona cards */
+.persona{
+  background:var(--obs-900);color:var(--bone-100);
+  border:1px solid var(--obs-700);border-radius:6px;
+  padding:32px 30px;position:relative;overflow:hidden;
+}
+.persona::after{
+  content:"";position:absolute;top:0;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,var(--amber-500),var(--cyan-400) 60%,transparent 95%);
+}
+.persona .pmeta{font-family:var(--ff-mono);font-size:10px;letter-spacing:.22em;color:var(--cyan-400);text-transform:uppercase;font-weight:600}
+.persona h3{font-family:var(--ff-display);font-weight:600;font-size:24px;color:var(--bone-50);margin:14px 0 18px;letter-spacing:-.018em}
+.persona dl{display:grid;grid-template-columns:90px 1fr;row-gap:10px;column-gap:18px;font-size:13.5px;line-height:1.55}
+.persona dt{font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mesh-400);font-weight:600;padding-top:3px}
+.persona dd{color:rgba(241,240,234,.78)}
+
+/* ─── COLOR ─────────────────────────────────────────────── */
+.color-hero-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:46px}
+.color-hero{aspect-ratio:3/2;border-radius:8px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;color:var(--bone-50);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.color-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(140deg,rgba(255,255,255,.06),transparent 50%);pointer-events:none}
+.color-hero .cn{font-family:var(--ff-display);font-weight:600;font-size:26px;letter-spacing:-.018em}
+.color-hero .ch{font-family:var(--ff-mono);font-size:11px;opacity:.85;margin-top:4px;letter-spacing:.08em}
+.color-group-title{
+  grid-column:1/-1;font-family:var(--ff-mono);font-weight:600;font-size:11px;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--cyan-600);
+  margin:38px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--mesh-200);
+}
+.color-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.color-card{background:#fff;border:1px solid var(--mesh-200);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.color-swatch{height:104px;position:relative}
+.color-swatch::after{content:attr(data-contrast);position:absolute;top:10px;right:10px;background:rgba(0,0,0,.72);color:#fff;font-family:var(--ff-mono);font-size:10px;padding:3px 8px;border-radius:3px;letter-spacing:.1em;font-weight:500}
+.color-info{padding:18px 20px}
+.color-info .cn{font-family:var(--ff-display);font-weight:600;font-size:16px;color:var(--obs-900);letter-spacing:-.01em}
+.color-info .ch{font-family:var(--ff-mono);font-size:11px;color:var(--mesh-400);margin:4px 0 10px;letter-spacing:.06em}
+.color-info .cu{font-size:13px;color:var(--mesh-500);line-height:1.55}
+@media(max-width:760px){.color-hero-row,.color-grid{grid-template-columns:1fr 1fr}}
+
+.ratio-bar{display:flex;height:54px;border-radius:6px;overflow:hidden;margin-top:34px;border:1px solid var(--mesh-200)}
+.ratio-bar div{display:flex;align-items:center;justify-content:center;font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+
+/* ─── TYPOGRAPHY ────────────────────────────────────────── */
+.type-specimen{
+  background:#fff;border:1px solid var(--mesh-200);
+  padding:46px;margin-bottom:22px;border-radius:6px;position:relative;
+}
+.type-family{font-family:var(--ff-mono);font-weight:600;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--cyan-600);margin-bottom:24px}
+.type-preview{color:var(--obs-900);margin-bottom:26px}
+.type-preview.display{font-family:var(--ff-display);font-weight:700;font-size:64px;line-height:.96;letter-spacing:-.03em}
+.type-preview.display em{font-style:normal;color:var(--amber-600);font-weight:500}
+.type-preview.body{font-family:var(--ff-body);font-weight:500;font-size:36px;line-height:1.25;letter-spacing:-.012em}
+.type-preview.mono{font-family:var(--ff-mono);font-weight:500;font-size:24px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;color:var(--amber-600)}
+.type-alphabet{font-size:14.5px;line-height:1.85;color:var(--mesh-500);padding:18px 0;border-top:1px solid var(--mesh-200);border-bottom:1px solid var(--mesh-200);margin-bottom:24px;letter-spacing:.02em}
+.type-weights{display:flex;gap:34px;flex-wrap:wrap}
+.type-weight-item{display:flex;flex-direction:column;align-items:center}
+.type-weight-preview{font-size:42px;color:var(--obs-900);line-height:1}
+.type-weight-label{font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mesh-400);margin-top:8px;font-weight:600}
+@media(max-width:760px){.type-preview.display{font-size:38px}.type-preview.body{font-size:24px}.type-specimen{padding:28px}}
+
+.type-scale-row{display:flex;gap:36px;padding:22px 0;border-bottom:1px solid var(--mesh-200);align-items:baseline}
+.type-scale-row:last-child{border-bottom:0}
+.type-scale-meta{min-width:200px;font-family:var(--ff-mono);font-size:11px;color:var(--mesh-400);line-height:1.6;letter-spacing:.04em}
+.type-scale-meta span{display:block;font-family:var(--ff-mono);font-weight:600;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan-600);margin-bottom:6px}
+@media(max-width:760px){.type-scale-row{flex-direction:column;gap:8px}.type-scale-meta{min-width:0}}
+
+/* ─── LOGO ──────────────────────────────────────────────── */
+.logo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:28px}
+.logo-variant{aspect-ratio:5/3;border-radius:6px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid var(--mesh-200)}
+.logo-variant-label{position:absolute;top:14px;left:18px;font-family:var(--ff-mono);font-weight:600;font-size:10px;letter-spacing:.22em;text-transform:uppercase}
+.logo-variant .corner-bracket{position:absolute;top:0;right:0;font-family:var(--ff-mono);font-size:11px;color:rgba(255,255,255,.35);padding:14px 18px;letter-spacing:.16em}
+.sim-logo{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:24px}
+.sim-logo .word{font-family:var(--ff-display);font-weight:700;font-size:42px;letter-spacing:-.04em;line-height:.95}
+.sim-logo .ampersand{font-family:var(--ff-display);font-weight:500;color:var(--amber-500);font-size:18px;line-height:1;display:inline-block;padding:4px 0}
+.sim-logo .rule{height:1.5px;width:64px;background:var(--amber-500);margin:2px 0}
+.sim-logo .tag{font-family:var(--ff-mono);font-weight:600;font-size:10px;letter-spacing:.32em;text-transform:uppercase}
+.sim-monogram{font-family:var(--ff-mono);font-weight:700;font-size:46px;letter-spacing:.02em;line-height:1}
+.sim-monogram em{font-style:normal;color:var(--amber-500)}
+
+.logo-on-obs{background:linear-gradient(140deg,var(--obs-900),var(--obs-800))}
+.logo-on-obs .sim-logo .word{color:var(--bone-50)}
+.logo-on-obs .sim-logo .tag{color:rgba(241,240,234,.65)}
+.logo-on-obs .logo-variant-label{color:rgba(241,240,234,.5)}
+
+.logo-on-bone{background:var(--bone-50)}
+.logo-on-bone .sim-logo .word{color:var(--obs-900)}
+.logo-on-bone .sim-logo .ampersand{color:var(--amber-600)}
+.logo-on-bone .sim-logo .rule{background:var(--amber-600)}
+.logo-on-bone .sim-logo .tag{color:var(--mesh-600)}
+.logo-on-bone .logo-variant-label{color:var(--mesh-400)}
+
+.logo-on-cyan{background:linear-gradient(140deg,var(--cyan-500),var(--cyan-600))}
+.logo-on-cyan .sim-logo .word{color:var(--bone-50)}
+.logo-on-cyan .sim-logo .ampersand{color:var(--amber-400)}
+.logo-on-cyan .sim-logo .rule{background:var(--amber-400)}
+.logo-on-cyan .sim-logo .tag{color:rgba(250,246,236,.85)}
+.logo-on-cyan .logo-variant-label{color:rgba(250,246,236,.7)}
+
+.logo-mono{background:#fff;border-color:var(--mesh-200)}
+.logo-mono .sim-logo .word,.logo-mono .sim-logo .tag,.logo-mono .sim-logo .ampersand{color:var(--obs-900)}
+.logo-mono .sim-logo .rule{background:var(--obs-900)}
+.logo-mono .logo-variant-label{color:var(--mesh-400)}
+
+.logo-monogram-card{background:linear-gradient(140deg,var(--obs-900),#070A14)}
+.logo-monogram-card .sim-monogram{color:var(--bone-50)}
+.logo-monogram-card .logo-variant-label{color:rgba(241,240,234,.5)}
+.logo-monogram-card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(194,138,32,.25),transparent 60%);pointer-events:none}
+
+.clear-space-demo{background:#fff;border:1px dashed var(--mesh-300);padding:72px 40px;display:flex;justify-content:center;align-items:center;margin-top:18px;position:relative;border-radius:6px}
+.clear-space-demo::before{content:"CLEAR SPACE = X (cap-height of H)";position:absolute;top:14px;left:18px;font-family:var(--ff-mono);font-size:10px;letter-spacing:.22em;color:var(--mesh-400);font-weight:600}
+.clear-space-demo .sim-logo .word{color:var(--obs-900);font-size:38px}
+.clear-space-demo .sim-logo .rule{background:var(--amber-500)}
+.clear-space-demo .sim-logo .tag{color:var(--mesh-600)}
+.clear-space-demo .sim-logo .ampersand{color:var(--amber-500)}
+
+@media(max-width:760px){.logo-grid{grid-template-columns:1fr}.sim-logo .word{font-size:30px}.sim-monogram{font-size:34px}}
+
+/* ─── MESSAGING / VOICE BLOCK ─────────────────────────── */
+.message-block{
+  background:linear-gradient(135deg,var(--obs-900),var(--obs-800));
+  color:var(--bone-50);border-radius:8px;padding:48px 44px;margin-bottom:24px;
+  position:relative;overflow:hidden;
+  border:1px solid var(--obs-700);
+}
+.message-block::before{
+  content:"";position:absolute;top:0;left:0;width:200px;height:100%;
+  background:linear-gradient(180deg,var(--cyan-400),transparent 70%);
+  width:3px;
+}
+.message-block::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 90% 10%,rgba(194,138,32,.14),transparent 50%);
+  pointer-events:none;
+}
+.message-block .pillar-eyebrow{font-family:var(--ff-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--cyan-400);margin-bottom:18px;font-weight:600}
+.message-block .pillar-title{font-family:var(--ff-display);font-weight:700;font-size:clamp(36px,4.6vw,58px);line-height:1;letter-spacing:-.035em;color:var(--bone-50);margin-bottom:18px}
+.message-block .pillar-title em{font-style:normal;color:var(--cyan-400);font-weight:500}
+.message-block .pillar-sub{font-family:var(--ff-body);font-size:17px;color:rgba(241,240,234,.78);max-width:62ch;line-height:1.7}
+.message-block.alt{background:linear-gradient(135deg,#fff,var(--bone-100));color:var(--obs-900);border-color:var(--mesh-200)}
+.message-block.alt .pillar-title{color:var(--obs-900)}
+.message-block.alt .pillar-eyebrow{color:var(--cyan-600)}
+.message-block.alt .pillar-sub{color:var(--mesh-600)}
+.message-block.alt::before{background:linear-gradient(180deg,var(--cyan-500),transparent 70%)}
+
+.headline-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}
+.headline-cell{background:#fff;border:1px solid var(--mesh-200);border-radius:6px;padding:24px 26px}
+.headline-cell .use{font-family:var(--ff-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan-600);font-weight:600;margin-bottom:10px}
+.headline-cell .h{font-family:var(--ff-display);font-weight:600;font-size:21px;color:var(--obs-900);letter-spacing:-.015em;line-height:1.25}
+@media(max-width:760px){.headline-grid{grid-template-columns:1fr}}
+
+/* CTA / Voice samples */
+.cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.cta-cell{background:#fff;border:1px solid var(--mesh-200);border-radius:6px;padding:18px 22px;font-family:var(--ff-body);font-size:14px;color:var(--mesh-600)}
+.cta-cell.right{border-left:3px solid var(--cyan-400)}
+.cta-cell.wrong{border-left:3px solid var(--crimson);text-decoration:line-through;text-decoration-color:rgba(200,54,43,.45)}
+.cta-cell .lbl{display:inline-block;font-family:var(--ff-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;padding:3px 8px;border-radius:3px;margin-right:10px}
+.cta-cell.right .lbl{background:rgba(46,125,63,.14);color:var(--cyan-500)}
+.cta-cell.wrong .lbl{background:rgba(200,54,43,.10);color:var(--crimson);text-decoration:none}
+@media(max-width:760px){.cta-grid{grid-template-columns:1fr}}
+
+.voice-mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+.voice-mode{background:var(--obs-900);color:var(--bone-100);border:1px solid var(--obs-700);border-radius:6px;padding:30px;position:relative;overflow:hidden}
+.voice-mode .vm-num{font-family:var(--ff-mono);font-size:11px;letter-spacing:.22em;color:var(--cyan-400);font-weight:600;text-transform:uppercase}
+.voice-mode h3{font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:10px 0 14px;letter-spacing:-.015em}
+.voice-mode .qt{font-family:var(--ff-body);font-style:italic;font-size:14px;line-height:1.65;color:rgba(241,240,234,.72);border-left:2px solid var(--cyan-400);padding-left:14px;margin-top:12px}
+@media(max-width:960px){.voice-mode-grid{grid-template-columns:1fr}}
+
+/* Comp matrix */
+.comp-matrix{width:100%;border-collapse:separate;border-spacing:0;margin-top:8px;background:#fff;border:1px solid var(--mesh-200);border-radius:6px;overflow:hidden}
+.comp-matrix th,.comp-matrix td{padding:16px 18px;text-align:left;font-size:13.5px;border-bottom:1px solid var(--mesh-200);vertical-align:top}
+.comp-matrix th{background:var(--obs-900);color:var(--bone-50);font-family:var(--ff-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
+.comp-matrix tr:last-child td{border-bottom:0}
+.comp-matrix td.dim{font-family:var(--ff-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan-600);font-weight:600;background:var(--bone-100);width:160px}
+.comp-matrix td.us{background:linear-gradient(180deg,rgba(34,211,238,.08),rgba(34,211,238,.04));color:var(--obs-900);font-weight:500;border-left:2px solid var(--cyan-500)}
+@media(max-width:760px){.comp-matrix th,.comp-matrix td{padding:12px 12px;font-size:12.5px}.comp-matrix td.dim{width:auto}}
+
+/* Visual / dos-donts */
+.dos-donts{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+.dos-donts h4{font-family:var(--ff-display);font-weight:600;font-size:20px;margin-bottom:14px;letter-spacing:-.012em}
+.dos-donts .do h4{color:var(--cyan-500)}
+.dos-donts .dont h4{color:var(--crimson)}
+.dos-donts ul{list-style:none;padding:0}
+.dos-donts li{padding:10px 0 10px 28px;position:relative;font-size:14px;color:var(--mesh-500);border-bottom:1px solid var(--mesh-200);line-height:1.55}
+.dos-donts .do li::before{content:"+";position:absolute;left:4px;color:var(--cyan-500);font-weight:900;font-family:var(--ff-mono)}
+.dos-donts .dont li::before{content:"×";position:absolute;left:4px;color:var(--crimson);font-weight:900;font-family:var(--ff-mono)}
+@media(max-width:760px){.dos-donts{grid-template-columns:1fr}}
+
+/* Pattern demos */
+.pattern-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:8px}
+.pattern{aspect-ratio:5/3;border-radius:6px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:24px;color:var(--bone-50);border:1px solid var(--obs-700)}
+.pattern .lbl{position:relative;z-index:2;font-family:var(--ff-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
+.pattern .lbl b{display:block;font-family:var(--ff-display);font-weight:600;font-size:18px;color:var(--bone-50);letter-spacing:-.012em;text-transform:none;margin-bottom:4px;font-weight:600}
+.pattern.mesh{background:var(--obs-900)}
+.pattern.mesh::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(194,138,32,.22) 1px,transparent 1px);background-size:18px 18px;mask-image:linear-gradient(180deg,#000,transparent);-webkit-mask-image:linear-gradient(180deg,#000,transparent)}
+.pattern.trace{background:linear-gradient(160deg,var(--obs-800),var(--obs-900))}
+.pattern.trace::before{content:"";position:absolute;left:24px;right:24px;top:46%;height:1px;background:linear-gradient(90deg,transparent,var(--amber-500),transparent);box-shadow:0 0 18px rgba(194,138,32,.6)}
+.pattern.trace::after{content:"";position:absolute;left:24px;top:46%;width:8px;height:8px;border-radius:50%;background:var(--amber-500);box-shadow:0 0 14px rgba(194,138,32,.7);transform:translateY(-50%)}
+.pattern.glow{background:radial-gradient(circle at 70% 30%,rgba(46,125,63,.45),transparent 50%),linear-gradient(160deg,var(--obs-900),var(--obs-800))}
+.pattern.amber{background:radial-gradient(circle at 30% 70%,rgba(194,138,32,.40),transparent 55%),linear-gradient(160deg,var(--obs-900),var(--obs-800))}
+
+/* Card style demos */
+.cardstyle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px}
+.cardstyle{border-radius:8px;padding:26px;min-height:200px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
+.cardstyle .lbl{font-family:var(--ff-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:600}
+.cardstyle h4{font-family:var(--ff-display);font-weight:600;font-size:20px;letter-spacing:-.015em;margin-top:8px}
+.cardstyle .pill{align-self:flex-start;font-family:var(--ff-mono);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
+.cs-lab{background:var(--obs-800);color:var(--bone-50);border:1px solid var(--obs-700)}
+.cs-lab .lbl{color:var(--cyan-400)}
+.cs-lab .pill{background:rgba(127,176,105,.18);color:var(--lab-lime);border:1px solid rgba(127,176,105,.34)}
+.cs-course{background:var(--bone-50);color:var(--obs-900);border:1px solid var(--mesh-200);border-top:3px solid var(--amber-500)}
+.cs-course .lbl{color:var(--amber-600)}
+.cs-course .pill{background:rgba(194,138,32,.14);color:var(--amber-600)}
+.cs-finding{background:var(--bone-50);color:var(--obs-900);border:1px solid var(--mesh-200);border-left:4px solid var(--crimson)}
+.cs-finding .lbl{color:var(--crimson)}
+.cs-finding .pill{background:rgba(200,54,43,.12);color:var(--crimson)}
+@media(max-width:960px){.cardstyle-grid{grid-template-columns:1fr}}
+
+/* Roadmap blocks */
+.roadmap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:8px}
+.rm-card{
+  background:linear-gradient(160deg,var(--obs-900),var(--obs-800));
+  color:var(--bone-50);border:1px solid var(--obs-700);
+  border-radius:8px;padding:30px;position:relative;overflow:hidden;
+}
+.rm-card::after{content:"";position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(194,138,32,.22),transparent 60%);pointer-events:none}
+.rm-card .step{font-family:var(--ff-mono);font-size:11px;letter-spacing:.22em;font-weight:600;color:var(--cyan-400);text-transform:uppercase}
+.rm-card h3{font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:12px 0 14px;letter-spacing:-.015em}
+.rm-card p{font-size:14px;color:rgba(241,240,234,.72);line-height:1.65}
+.rm-card .bullets{margin-top:16px;display:grid;gap:8px}
+.rm-card .bullets div{font-family:var(--ff-mono);font-size:11px;color:rgba(241,240,234,.7);letter-spacing:.05em;display:flex;align-items:center;gap:10px}
+.rm-card .bullets div::before{content:"→";color:var(--cyan-400);font-weight:600}
+
+/* UX/UI translation flow */
+.flow-list{margin-top:8px;display:grid;gap:10px}
+.flow-row{
+  display:grid;grid-template-columns:60px 1fr 200px;gap:18px;align-items:center;
+  background:#fff;border:1px solid var(--mesh-200);border-radius:6px;padding:18px 22px;
+}
+.flow-row .num{font-family:var(--ff-display);font-weight:700;font-size:24px;color:var(--cyan-500);letter-spacing:-.02em}
+.flow-row .name{font-family:var(--ff-display);font-weight:600;font-size:17px;color:var(--obs-900);letter-spacing:-.012em}
+.flow-row .name small{display:block;font-family:var(--ff-body);font-weight:400;font-size:13px;color:var(--mesh-500);margin-top:4px;letter-spacing:0;line-height:1.5}
+.flow-row .role{font-family:var(--ff-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan-600);text-align:right;font-weight:600}
+@media(max-width:760px){.flow-row{grid-template-columns:48px 1fr;gap:12px}.flow-row .role{grid-column:1/3;text-align:left}}
+
+/* Voice rule list */
+.voice-rules{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:8px;background:#fff;border:1px solid var(--mesh-200);border-radius:6px;overflow:hidden}
+.voice-rules .head{background:var(--obs-900);color:var(--bone-50);font-family:var(--ff-mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;padding:14px 22px}
+.voice-rules .row{padding:14px 22px;border-bottom:1px solid var(--mesh-200);font-size:14px;color:var(--mesh-600);line-height:1.5}
+.voice-rules .row.do{border-right:1px solid var(--mesh-200);background:#fff}
+.voice-rules .row.dont{background:var(--bone-100);text-decoration:line-through;text-decoration-color:rgba(200,54,43,.40);color:var(--mesh-500)}
+.voice-rules .row:last-child{border-bottom:0}
+
+/* Lexicon */
+.lex-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.lex-row .chip{font-family:var(--ff-mono);font-size:11px;font-weight:500;letter-spacing:.06em;padding:7px 13px;border-radius:999px;background:var(--obs-800);color:var(--bone-100);border:1px solid var(--obs-700)}
+.lex-row.avoid .chip{background:transparent;color:rgba(241,240,234,.55);text-decoration:line-through;border-color:rgba(200,54,43,.35)}
+
+/* Final summary */
+.final-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
+.final-card{background:#fff;border:1px solid var(--mesh-200);border-radius:6px;padding:26px;position:relative}
+.final-card::before{content:"";position:absolute;top:0;left:0;width:48px;height:3px;background:var(--cyan-500)}
+.final-card .k{font-family:var(--ff-mono);font-size:10px;letter-spacing:.22em;color:var(--cyan-600);text-transform:uppercase;font-weight:600;margin-bottom:8px}
+.final-card .v{font-family:var(--ff-display);font-weight:600;font-size:18px;color:var(--obs-900);letter-spacing:-.012em;line-height:1.35}
+@media(max-width:960px){.final-grid{grid-template-columns:1fr}}
+
+.mantra-strip{
+  margin-top:36px;padding:46px 44px;
+  background:linear-gradient(135deg,var(--obs-900),var(--obs-800));
+  color:var(--bone-50);border-radius:8px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:30px;
+  position:relative;overflow:hidden;border:1px solid var(--obs-700);
+}
+.mantra-strip::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 100% 0%,rgba(194,138,32,.16),transparent 50%);pointer-events:none}
+.mantra-strip .m{position:relative;z-index:2}
+.mantra-strip .num{font-family:var(--ff-mono);font-size:11px;letter-spacing:.22em;color:var(--cyan-400);font-weight:600;text-transform:uppercase;margin-bottom:10px}
+.mantra-strip .qt{font-family:var(--ff-display);font-style:normal;font-weight:600;font-size:22px;color:var(--bone-50);line-height:1.25;letter-spacing:-.015em}
+.mantra-strip .qt em{color:var(--cyan-400);font-style:normal;font-weight:500}
+@media(max-width:760px){.mantra-strip{grid-template-columns:1fr;gap:22px}}
+
+/* ─── PRINT ─────────────────────────────────────────────── */
+@media print{
+  body{background:#fff;padding:0}
+  .page{box-shadow:none;margin:0;page-break-after:always;border-radius:0}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 1 — COVER
+     ════════════════════════════════════════════════════ -->
+<div class="page cover">
+  <div class="cover-corner"></div>
+  <div class="cover-corner-br"></div>
+  <div class="cover-stripe"></div>
+  <div class="cover-watermark">H4H</div>
+  <div class="cover-bracket">&lt;<span>brand-system</span>/&gt;</div>
+  <div class="page-inner">
+    <div class="cover-rule"></div>
+    <div class="cover-subtitle">Official Brand Guidelines · Internal &amp; Partner Use</div>
+    <h1 class="cover-title">
+      Hackin'<br>
+      <span class="accent">4 Harden.</span>
+    </h1>
+    <div class="cover-tag">From Hack · To Harden · Cybersecurity Practice · 2026</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">Version<span>1.0</span></div>
+      <div class="cover-meta-item">Date<span>May 2026</span></div>
+      <div class="cover-meta-item">Status<span>Internal Use</span></div>
+      <div class="cover-meta-item">Sections<span>14</span></div>
+      <div class="cover-meta-item">Custodian<span>Brand &amp; Strategy</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 2 — TABLE OF CONTENTS
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">00</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Overview</div>
+      <h2 class="section-title">Table of <em>Contents</em></h2>
+      <p class="section-desc">A complete brand system for Hackin' 4 Harden — covering identity foundation, audience strategy, messaging architecture, color and typography, visual language, website translation, voice, competitive positioning, and the expansion roadmap into LMS, dashboard, and enterprise surfaces.</p>
+    </div>
+    <div class="toc-wrap">
+      <div class="toc-row"><span class="t">Brand Overview</span><span class="d"></span><span class="n">01</span></div>
+      <div class="toc-row"><span class="t">Mission · Vision · Core Identity</span><span class="d"></span><span class="n">02</span></div>
+      <div class="toc-row"><span class="t">Target Audience Personas</span><span class="d"></span><span class="n">03</span></div>
+      <div class="toc-row"><span class="t">Brand Positioning</span><span class="d"></span><span class="n">04</span></div>
+      <div class="toc-row"><span class="t">Messaging Framework</span><span class="d"></span><span class="n">05</span></div>
+      <div class="toc-row"><span class="t">Logo Direction &amp; Usage</span><span class="d"></span><span class="n">06</span></div>
+      <div class="toc-row"><span class="t">Color Palette Strategy</span><span class="d"></span><span class="n">07</span></div>
+      <div class="toc-row"><span class="t">Typography System</span><span class="d"></span><span class="n">08</span></div>
+      <div class="toc-row"><span class="t">Visual Identity Language</span><span class="d"></span><span class="n">09</span></div>
+      <div class="toc-row"><span class="t">Website UX/UI Translation</span><span class="d"></span><span class="n">10</span></div>
+      <div class="toc-row"><span class="t">Tone of Voice</span><span class="d"></span><span class="n">11</span></div>
+      <div class="toc-row"><span class="t">Competitive Market Positioning</span><span class="d"></span><span class="n">12</span></div>
+      <div class="toc-row"><span class="t">CRM · LMS · Dashboard Expansion</span><span class="d"></span><span class="n">13</span></div>
+      <div class="toc-row"><span class="t">Final Strategic Summary</span><span class="d"></span><span class="n">14</span></div>
+    </div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 00 — Contents</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 3 — BRAND OVERVIEW (01)
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">01</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Foundation</div>
+      <h2 class="section-title">Brand <em>Overview</em></h2>
+      <p class="section-desc">Hackin' 4 Harden is a cybersecurity training, research, and advisory practice built on a single conviction: <em>you cannot harden what you have never hacked.</em> The brand exists at the intersection of education, applied offensive security, and defensive engineering — three disciplines the market rarely holds together well.</p>
+    </div>
+
+    <div class="grid-3" style="margin-top:8px">
+      <div class="card"><div class="hash">01</div><div class="meta">Discipline</div><h3>Offensive Education</h3><p>We teach individuals and organizations to think like attackers — through structured curriculum, hands-on labs, and certifications mapped to NIST CSF, MITRE ATT&amp;CK, and the NICE Framework.</p></div>
+      <div class="card"><div class="hash">02</div><div class="meta">Discipline</div><h3>Applied Red-Team</h3><p>Practitioner-led adversarial assessment. We attack the systems we are paid to protect — and document every step in a methodology learners can read.</p></div>
+      <div class="card"><div class="hash">03</div><div class="meta">Discipline</div><h3>Defensive Engineering</h3><p>Hardening, detection, and response work delivered as the second half of every engagement. Findings are not the deliverable — the hardened system is.</p></div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:24px;color:var(--obs-900);margin:54px 0 18px;letter-spacing:-.018em">Brand Personality</h3>
+    <div class="grid-3">
+      <div class="card dark"><div class="meta" style="color:var(--cyan-400)">Trait 01</div><h3>Disciplined</h3><p>We treat security as a craft, not a culture. Tone is precise; visuals are quiet; the work speaks.</p></div>
+      <div class="card dark"><div class="meta" style="color:var(--cyan-400)">Trait 02</div><h3>Adversarial-Minded</h3><p>We frame problems the way attackers do — by motive, opportunity, and capability — not the way auditors do.</p></div>
+      <div class="card dark"><div class="meta" style="color:var(--cyan-400)">Trait 03</div><h3>Educational</h3><p>We assume our reader wants to learn, not be sold. Every artifact teaches something.</p></div>
+      <div class="card dark"><div class="meta" style="color:var(--cyan-400)">Trait 04</div><h3>Ethical</h3><p>Hacking is a verb we earn. We teach offense to produce defense; never the reverse.</p></div>
+      <div class="card dark"><div class="meta" style="color:var(--cyan-400)">Trait 05</div><h3>Composed</h3><p>Confidence shown by restraint. No theatrics, no fearmongering, no neon binary rain.</p></div>
+      <div class="card dark"><div class="meta" style="color:var(--cyan-400)">Trait 06</div><h3>Builder-Coded</h3><p>The brand reads like it was made by people who ship — not people who sell.</p></div>
+    </div>
+
+    <div class="note-box"><strong>Brand DNA:</strong> Authority earned through specificity. We name the threat, the tool, the framework, the version. We show the artifact before we make the claim. We treat the learner as a future colleague and the enterprise as an intelligent adult. <em>Receipts before adjectives.</em></div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 01 — Brand Overview</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 4 — MISSION / VISION / CORE IDENTITY (02)
+     ════════════════════════════════════════════════════ -->
+<div class="page dark">
+  <div class="section-number">02</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Foundation</div>
+      <h2 class="section-title">Mission · Vision · <em>Core Identity</em></h2>
+      <p class="section-desc">A single conviction expressed three ways — what we do, where we are taking the field, and the verb that anchors every decision the brand makes.</p>
+    </div>
+
+    <div class="message-block" style="margin-top:0">
+      <div class="pillar-eyebrow">Mission</div>
+      <div class="pillar-title">Raise the floor of <em>global cyber defense</em>.</div>
+      <p class="pillar-sub">By producing a generation of practitioners who can attack ethically and harden professionally — and by partnering with the institutions and enterprises that depend on them.</p>
+    </div>
+
+    <div class="message-block">
+      <div class="pillar-eyebrow">Vision</div>
+      <div class="pillar-title">Security as a <em>literate baseline</em>, not a specialist's privilege.</div>
+      <p class="pillar-sub">A world where every developer, analyst, student, and operator carries the offensive intuition needed to build defensible systems by default — and where defense is no longer downstream of attack.</p>
+    </div>
+
+    <div class="message-block">
+      <div class="pillar-eyebrow">Core Identity — The Verb That Anchors Us</div>
+      <div class="pillar-title">From <em>Hack</em>. To <em>Harden</em>.</div>
+      <p class="pillar-sub">A practice that holds both sides of the discipline. We hack — ethically, methodologically, with a paid scope and a written rules-of-engagement — so we can harden. The loop is the brand.</p>
+    </div>
+
+    <div class="note-box"><strong>The Loop:</strong> Recon → Exploit → Harden → Verify. Every learner track, every engagement, every published methodology runs this loop. It is the brand's structural mental model — repeatable across audiences, products, and surfaces.</div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 02 — Core Identity</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 5 — TARGET AUDIENCE PERSONAS (03)
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">03</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Audience</div>
+      <h2 class="section-title">Audience <em>Personas</em></h2>
+      <p class="section-desc">Six personas drive every messaging, channel, and product decision. The brand must read fluently to each — without code-switching its identity. The same voice; different volumes, different proofs.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="persona">
+        <div class="pmeta">Persona 01 · Learner</div>
+        <h3>The Aspiring Practitioner</h3>
+        <dl>
+          <dt>Profile</dt><dd>18–28. CS or IT student, or self-taught help-desk tech reaching for the next rung.</dd>
+          <dt>Goal</dt><dd>Land a first cybersecurity role — analyst, junior pentester, SOC tier-1.</dd>
+          <dt>Pain</dt><dd>Drowning in fragmented tutorials. Unsure which certifications matter. Intimidated by offensive work.</dd>
+          <dt>Trigger</dt><dd>A clear, structured path from "never opened Burp" to "published a real lab write-up."</dd>
+        </dl>
+      </div>
+
+      <div class="persona">
+        <div class="pmeta">Persona 02 · Operator</div>
+        <h3>The Ethical Hacker</h3>
+        <dl>
+          <dt>Profile</dt><dd>25–40. OSCP-certified or equivalent. Doing engagements freelance or in-house.</dd>
+          <dt>Goal</dt><dd>Specialize or pivot — cloud red-teaming, AD attacks, mobile, ICS, AI/ML attack surface.</dd>
+          <dt>Pain</dt><dd>Most "advanced" courses are repackaged beginner content. They want practitioner depth.</dd>
+          <dt>Trigger</dt><dd>Material that respects what they already know and goes further.</dd>
+        </dl>
+      </div>
+
+      <div class="persona">
+        <div class="pmeta">Persona 03 · Defender</div>
+        <h3>The Defender-Side Learner</h3>
+        <dl>
+          <dt>Profile</dt><dd>24–45. Working in IT ops, dev, GRC, or SOC. Defending without ever having attacked.</dd>
+          <dt>Goal</dt><dd>Build offensive intuition to make better defensive decisions.</dd>
+          <dt>Pain</dt><dd>Protecting systems they cannot break — threat models stay theoretical.</dd>
+          <dt>Trigger</dt><dd>A learning track explicitly framed "offense for defenders."</dd>
+        </dl>
+      </div>
+
+      <div class="persona">
+        <div class="pmeta">Persona 04 · Institution</div>
+        <h3>The University &amp; Training Arm</h3>
+        <dl>
+          <dt>Profile</dt><dd>Department head, dean, or training director sourcing curriculum, labs, instructor support.</dd>
+          <dt>Goal</dt><dd>Stand up or upgrade a credible cybersecurity program with industry alignment.</dd>
+          <dt>Pain</dt><dd>Internal capacity is thin; vendor curricula feel either over-academic or under-rigorous.</dd>
+          <dt>Trigger</dt><dd>Off-the-shelf curriculum mapped to NICE / NIST, co-deliverable with their faculty.</dd>
+        </dl>
+      </div>
+
+      <div class="persona">
+        <div class="pmeta">Persona 05 · Enterprise</div>
+        <h3>The Security-Conscious Enterprise</h3>
+        <dl>
+          <dt>Profile</dt><dd>CISO, Head of Security, VP Engineering at a 200–10,000-person organization.</dd>
+          <dt>Goal</dt><dd>Reduce real attack surface, raise workforce literacy, pass audits without performative compliance.</dd>
+          <dt>Pain</dt><dd>Tired of vendors who deliver boilerplate reports and never train the team.</dd>
+          <dt>Trigger</dt><dd>A unified "assess + harden + upskill" engagement model.</dd>
+        </dl>
+      </div>
+
+      <div class="persona">
+        <div class="pmeta">Persona 06 · SMB</div>
+        <h3>The Mid-Market Founder</h3>
+        <dl>
+          <dt>Profile</dt><dd>Founder, CTO, or operations lead at a mid-sized organization.</dd>
+          <dt>Goal</dt><dd>Reach a credible baseline of security posture without hiring a full team.</dd>
+          <dt>Pain</dt><dd>Vendors over-scope and over-charge; "good enough" is undefined.</dd>
+          <dt>Trigger</dt><dd>A clear, fixed-scope security baseline package — and a human who explains it.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="note-box"><strong>Audience continuum:</strong> Today's <em>Aspiring Practitioner</em> is next year's <em>Ethical Hacker</em>; next decade's <em>CISO</em>. The brand is engineered for the full lifecycle of the security professional — not a slice of it.</div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 03 — Personas</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 6 — BRAND POSITIONING (04)
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">04</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Strategy</div>
+      <h2 class="section-title">Brand <em>Positioning</em></h2>
+      <p class="section-desc">The cybersecurity market has fragmented into platforms that each pick one side — pure CTF entertainment, classroom certifications, or enterprise tooling. We refuse the choice. Hackin' 4 Harden is the connective tissue between learning to hack and learning to harden.</p>
+    </div>
+
+    <div class="message-block alt" style="margin-top:0">
+      <div class="pillar-eyebrow">Positioning Statement</div>
+      <div class="pillar-title">For learners and organizations who refuse to outsource their own security understanding.</div>
+      <p class="pillar-sub">Hackin' 4 Harden is the cybersecurity practice that teaches and proves both sides of the discipline — because the people who can break a system are the only people qualified to harden it.</p>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--obs-900);margin:48px 0 18px;letter-spacing:-.018em">What Makes Us Different</h3>
+    <div class="grid-2">
+      <div class="card"><div class="meta">Difference 01</div><h3>The Loop is the Product</h3><p>Most brands sell content libraries. We sell the four-step loop — Recon · Exploit · Harden · Verify — applied to learners and enterprises with the same mental model.</p></div>
+      <div class="card"><div class="meta">Difference 02</div><h3>Practitioner-Made, Always</h3><p>Every lab, every write-up, every assessment is authored by working practitioners. No third-party content licensing. No theory-only instructors.</p></div>
+      <div class="card"><div class="meta">Difference 03</div><h3>Outcomes, Not Hours</h3><p>Learner certifications and engagement deliverables are measured the same way: did the system get harder to attack after we left?</p></div>
+      <div class="card"><div class="meta">Difference 04</div><h3>Two Audiences, One Brand</h3><p>The same methodology powers both education and services. The voice never changes — only the volume.</p></div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--obs-900);margin:48px 0 18px;letter-spacing:-.018em">Trust · Education · Security Triangle</h3>
+    <div class="grid-3">
+      <div class="card"><div class="meta">Trust</div><h3>Methodology Open</h3><p>Every public artifact is a competence proof. Open methodology pages, public learner work, redacted findings samples.</p></div>
+      <div class="card"><div class="meta">Education</div><h3>Loop-Based Learning</h3><p>Continuous offense-to-defense cycles. Attack, read, fix, repeat. The classroom is a lab; the lab is the curriculum.</p></div>
+      <div class="card"><div class="meta">Security</div><h3>Harden-First Delivery</h3><p>Every assessment ends in a hardening hand-off — not a list of vulnerabilities. The hardened system <em>is</em> the deliverable.</p></div>
+    </div>
+
+    <div class="note-box"><strong>The whitespace we own:</strong> No single brand in the market today is simultaneously practitioner-credible, institutionally trustworthy, and enterprise-deliverable — and talks to all three audiences without code-switching its identity. <em>That is our home.</em></div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 04 — Positioning</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 7 — MESSAGING FRAMEWORK (05)
+     ════════════════════════════════════════════════════ -->
+<div class="page dark">
+  <div class="section-number">05</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Messaging</div>
+      <h2 class="section-title"><em>Messaging</em> Framework</h2>
+      <p class="section-desc">A pillar headline, a supporting headline system, value propositions, trust signals, authority statements, and a CTA tone — all derived from one verb. Every long-form headline can be traced back to it.</p>
+    </div>
+
+    <div class="message-block" style="margin-top:0">
+      <div class="pillar-eyebrow">Master Pillar — The Five Words That Carry the Brand</div>
+      <div class="pillar-title">From <em>Hack</em>. To <em>Harden</em>.</div>
+      <p class="pillar-sub">Train the attacker. Build the defender. Harden the system. The pillar is short, dual-meaning, and verb-led — it carries the brand's full strategic logic in five words.</p>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:48px 0 18px;letter-spacing:-.018em">Supporting Headline System</h3>
+    <div class="headline-grid">
+      <div class="headline-cell" style="background:var(--obs-800);border-color:var(--obs-700)">
+        <div class="use">Brand-Level</div>
+        <div class="h" style="color:var(--bone-50)">Train the attacker. Build the defender. <span style="color:var(--amber-400)">Harden the system.</span></div>
+      </div>
+      <div class="headline-cell" style="background:var(--obs-800);border-color:var(--obs-700)">
+        <div class="use">Education-Led</div>
+        <div class="h" style="color:var(--bone-50)">Learn the offense the defenders should already <span style="color:var(--amber-400)">know.</span></div>
+      </div>
+      <div class="headline-cell" style="background:var(--obs-800);border-color:var(--obs-700)">
+        <div class="use">Enterprise-Led</div>
+        <div class="h" style="color:var(--bone-50)">We will break what you ship — then teach your team to <span style="color:var(--amber-400)">keep it standing.</span></div>
+      </div>
+      <div class="headline-cell" style="background:var(--obs-800);border-color:var(--obs-700)">
+        <div class="use">Institutional</div>
+        <div class="h" style="color:var(--bone-50)">Curriculum built by people who <span style="color:var(--amber-400)">do the work.</span></div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:48px 0 18px;letter-spacing:-.018em">CTA Tone — Right vs Wrong</h3>
+    <div class="cta-grid">
+      <div class="cta-cell right"><span class="lbl">Use</span>Start the lab</div>
+      <div class="cta-cell wrong"><span class="lbl">Avoid</span>Click here to get started</div>
+      <div class="cta-cell right"><span class="lbl">Use</span>Book a scoped assessment</div>
+      <div class="cta-cell wrong"><span class="lbl">Avoid</span>Get in touch</div>
+      <div class="cta-cell right"><span class="lbl">Use</span>Read the methodology</div>
+      <div class="cta-cell wrong"><span class="lbl">Avoid</span>Learn more</div>
+      <div class="cta-cell right"><span class="lbl">Use</span>Join the cohort</div>
+      <div class="cta-cell wrong"><span class="lbl">Avoid</span>Sign up now!</div>
+      <div class="cta-cell right"><span class="lbl">Use</span>Request the syllabus</div>
+      <div class="cta-cell wrong"><span class="lbl">Avoid</span>Download our free guide</div>
+    </div>
+
+    <div class="note-box"><strong>Trust statements:</strong> "Methodology open · Outcomes evidenced · Engagements scoped honestly." <strong>Authority statements:</strong> "If your training vendor cannot demonstrate the attack, they cannot teach the defense." Used sparingly — sales decks and partnership outreach only.</div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 05 — Messaging</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 8 — LOGO DIRECTION & USAGE (06)
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">06</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Identity</div>
+      <h2 class="section-title">Logo <em>Direction</em></h2>
+      <p class="section-desc">The lockup is a stacked wordmark — "HACKIN'" above "HARDEN", joined by a connective glyph that performs the brand's dual meaning. A code-bracketed monogram, <code style="font-family:var(--ff-mono);background:var(--obs-900);color:var(--amber-500);padding:2px 8px;border-radius:3px;font-size:14px">&lt;H4H/&gt;</code>, doubles as favicon, app icon, and product chrome — borrowing semantic authority from HTML/code syntax while maintaining the gold-on-navy register of the official mark.</p>
+    </div>
+
+    <div class="logo-grid">
+      <div class="logo-variant logo-on-obs">
+        <span class="logo-variant-label">01 · Primary — Obsidian</span>
+        <span class="corner-bracket">&lt;primary/&gt;</span>
+        <div class="sim-logo">
+          <span class="word">HACKIN'</span>
+          <span class="ampersand">— 4 —</span>
+          <span class="word">HARDEN</span>
+          <div class="rule"></div>
+          <span class="tag">From Hack · To Harden</span>
+        </div>
+      </div>
+      <div class="logo-variant logo-on-bone">
+        <span class="logo-variant-label">02 · Bone</span>
+        <span class="corner-bracket" style="color:var(--mesh-400)">&lt;bone/&gt;</span>
+        <div class="sim-logo">
+          <span class="word">HACKIN'</span>
+          <span class="ampersand">— 4 —</span>
+          <span class="word">HARDEN</span>
+          <div class="rule"></div>
+          <span class="tag">From Hack · To Harden</span>
+        </div>
+      </div>
+      <div class="logo-variant logo-on-cyan">
+        <span class="logo-variant-label">03 · Signal Cyan</span>
+        <span class="corner-bracket" style="color:rgba(11,18,32,.55)">&lt;accent/&gt;</span>
+        <div class="sim-logo">
+          <span class="word">HACKIN'</span>
+          <span class="ampersand">— 4 —</span>
+          <span class="word">HARDEN</span>
+          <div class="rule"></div>
+          <span class="tag">From Hack · To Harden</span>
+        </div>
+      </div>
+      <div class="logo-variant logo-mono">
+        <span class="logo-variant-label">04 · Mono / Print</span>
+        <span class="corner-bracket" style="color:var(--mesh-400)">&lt;mono/&gt;</span>
+        <div class="sim-logo">
+          <span class="word">HACKIN'</span>
+          <span class="ampersand">— 4 —</span>
+          <span class="word">HARDEN</span>
+          <div class="rule"></div>
+          <span class="tag">From Hack · To Harden</span>
+        </div>
+      </div>
+      <div class="logo-variant logo-monogram-card">
+        <span class="logo-variant-label">05 · Monogram — Favicon &amp; Product Chrome</span>
+        <span class="corner-bracket">&lt;mark/&gt;</span>
+        <div class="sim-monogram">&lt;<em>H4H</em>/&gt;</div>
+      </div>
+      <div class="logo-variant logo-monogram-card" style="background:var(--bone-50)">
+        <span class="logo-variant-label" style="color:var(--mesh-400)">06 · Monogram on Cream</span>
+        <span class="corner-bracket" style="color:var(--mesh-400)">&lt;mark/&gt;</span>
+        <div class="sim-monogram" style="color:var(--obs-900)">&lt;<em style="color:var(--amber-600)">H4H</em>/&gt;</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--obs-900);margin:38px 0 16px;letter-spacing:-.018em">Clear Space &amp; Construction</h3>
+    <div class="clear-space-demo">
+      <div class="sim-logo">
+        <span class="word">HACKIN'</span>
+        <span class="ampersand">— 4 —</span>
+        <span class="word">HARDEN</span>
+        <div class="rule"></div>
+        <span class="tag">From Hack · To Harden</span>
+      </div>
+    </div>
+
+    <div class="dos-donts">
+      <div class="do">
+        <h4>Do</h4>
+        <ul>
+          <li>Maintain clear space equal to the cap-height of "H" on every side.</li>
+          <li>Use the monogram in chrome and favicons; full lockup in marketing surfaces.</li>
+          <li>Pair Signal Cyan accent with Obsidian on dark surfaces.</li>
+          <li>Apply a 24% obsidian scrim when placing the lockup over photography.</li>
+        </ul>
+      </div>
+      <div class="dont">
+        <h4>Don't</h4>
+        <ul>
+          <li>Recolor outside the approved palette (no greens, reds, or off-brand blues).</li>
+          <li>Add drop shadows, outlines, gradients, or glow effects to the mark.</li>
+          <li>Stretch, rotate, or skew the lockup — even by a degree.</li>
+          <li>Use cliché security iconography: padlocks, hooded figures, binary rain.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note-box"><strong>Minimum sizes:</strong> Digital — 96 px lockup width, 24 px monogram. Print — 0.875″ lockup, 0.25″ monogram. Below these thresholds, switch to the monogram only. The strapline ("From Hack · To Harden") drops at sizes under 140 px.</div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 06 — Logo</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 9 — COLOR PALETTE STRATEGY (07)
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">07</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">System</div>
+      <h2 class="section-title">Color <em>Palette</em></h2>
+      <p class="section-desc">A palette extracted directly from the official Hackin' for Harden mark — Augusta-tournament green from the "Harden" script, Masters mustard gold from the arched "HACKIN' FOR" wordmark, midnight navy from the golfer silhouette, flag crimson from the pin, and a warm tournament-cream paper. Three psychological currents — heritage authority, fairway optimism, and applied warmth — engineered for AA contrast minimums across every paired combination.</p>
+    </div>
+
+    <div class="color-hero-row">
+      <div class="color-hero" style="background:linear-gradient(135deg,#1B2A40,#11192B)">
+        <div class="cn">Midnight Navy</div>
+        <div class="ch">#1B2A40 · silhouette &amp; foundation</div>
+      </div>
+      <div class="color-hero" style="background:linear-gradient(135deg,#2E7D3F,#1F5C2C)">
+        <div class="cn">Augusta Green</div>
+        <div class="ch">#2E7D3F · primary brand accent</div>
+      </div>
+      <div class="color-hero" style="background:linear-gradient(135deg,#C28A20,#9C6E15);color:#1B2A40">
+        <div class="cn">Masters Gold</div>
+        <div class="ch">#C28A20 · secondary brand accent</div>
+      </div>
+    </div>
+
+    <div class="color-grid">
+      <div class="color-group-title">Primary Palette · Midnight Navy (logo silhouette)</div>
+      <div class="color-card"><div class="color-swatch" style="background:#11192B" data-contrast="AAA"></div><div class="color-info"><div class="cn">Navy 950</div><div class="ch">#11192B</div><div class="cu">Hero backgrounds, footer, deepest surface</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#1B2A40" data-contrast="AAA"></div><div class="color-info"><div class="cn">Midnight Navy 900</div><div class="ch">#1B2A40</div><div class="cu">Default dark page, primary navigation</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#243450" data-contrast="AAA"></div><div class="color-info"><div class="cn">Navy 800</div><div class="ch">#243450</div><div class="cu">Card surfaces on dark, alternate sections</div></div></div>
+    </div>
+
+    <div class="color-grid">
+      <div class="color-group-title">Accent Palette · Augusta Green &amp; Masters Gold</div>
+      <div class="color-card"><div class="color-swatch" style="background:#2E7D3F" data-contrast="AA"></div><div class="color-info"><div class="cn">Augusta Green</div><div class="ch">#2E7D3F</div><div class="cu">Primary accent, headings on dark, brand rules, links</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#1F5C2C" data-contrast="AAA"></div><div class="color-info"><div class="cn">Augusta Deep</div><div class="ch">#1F5C2C</div><div class="cu">Hover state, small-text green on light surfaces</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#C28A20" data-contrast="AA"></div><div class="color-info"><div class="cn">Masters Gold</div><div class="ch">#C28A20</div><div class="cu">Secondary accent, eyebrow labels, ceremonial moments</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#9C6E15" data-contrast="AAA"></div><div class="color-info"><div class="cn">Gold Deep</div><div class="ch">#9C6E15</div><div class="cu">Pressed states; printed gold on cream</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#C8362B" data-contrast="AAA"></div><div class="color-info"><div class="cn">Flag Crimson</div><div class="ch">#C8362B</div><div class="cu">Reserved exclusively for urgency / error / warning</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#7FB069" data-contrast="AA"></div><div class="color-info"><div class="cn">Fairway Sage</div><div class="ch">#7FB069</div><div class="cu">Status indicators, safe / passing / verified states</div></div></div>
+    </div>
+
+    <div class="color-grid">
+      <div class="color-group-title">Neutral Palette · Tournament Cream &amp; Mesh</div>
+      <div class="color-card"><div class="color-swatch" style="background:#FAF6EC" data-contrast="BG"></div><div class="color-info"><div class="cn">Cream 50</div><div class="ch">#FAF6EC</div><div class="cu">Light page background, certificate paper</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#F0E9D6" data-contrast="BG"></div><div class="color-info"><div class="cn">Cream 100</div><div class="ch">#F0E9D6</div><div class="cu">Section alternates on light surfaces</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#D7CDB5" data-contrast="BG"></div><div class="color-info"><div class="cn">Mesh 200</div><div class="ch">#D7CDB5</div><div class="cu">Hairlines, dividers, card borders</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#8B8169" data-contrast="AA"></div><div class="color-info"><div class="cn">Mesh 400</div><div class="ch">#8B8169</div><div class="cu">Tertiary text, captions, mono labels</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#4D453A" data-contrast="AAA"></div><div class="color-info"><div class="cn">Mesh 600</div><div class="ch">#4D453A</div><div class="cu">Secondary body text on cream surfaces</div></div></div>
+      <div class="color-card"><div class="color-swatch" style="background:#1F1B14" data-contrast="AAA"></div><div class="color-info"><div class="cn">Mesh 800</div><div class="ch">#1F1B14</div><div class="cu">Primary body text on cream surfaces</div></div></div>
+    </div>
+
+    <div class="ratio-bar">
+      <div style="flex:55;background:#1B2A40;color:#FAF6EC">55% Midnight Navy</div>
+      <div style="flex:25;background:#F0E9D6;color:#1B2A40">25% Cream &amp; Mesh</div>
+      <div style="flex:10;background:#2E7D3F;color:#FAF6EC">10% Augusta Green</div>
+      <div style="flex:6;background:#C28A20;color:#1B2A40">6% Gold</div>
+      <div style="flex:3;background:#7FB069;color:#1B2A40">3%</div>
+      <div style="flex:1;background:#C8362B;color:#FAF6EC">1%</div>
+    </div>
+
+    <div class="note-box"><strong>Usage discipline:</strong> Augusta Green is the brand's voice — it carries headings, accents, and structural rules. Masters Gold is reserved for eyebrows, ceremonial type, and human-led moments. Flag Crimson is sacred — used only when something is actually wrong. Cream paper is the brand's natural light surface; pure white is never used. Restraint is the brand's most expensive asset.</div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 07 — Color</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 10 — TYPOGRAPHY SYSTEM (08)
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">08</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">System</div>
+      <h2 class="section-title">Typography <em>System</em></h2>
+      <p class="section-desc">A four-family system, deliberately disciplined: a confident geometric sans for display, a humanist sans for body, a code-grade monospace for labels and technical content, and a tabular numeric stack for stats and data. The pairing reads as both modern-SaaS and practitioner-credible.</p>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-family">Display — Space Grotesk</div>
+      <div class="type-preview display">From Hack.<br>To <em>Harden</em>.</div>
+      <div class="type-alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 !@#$%&amp;*(),.?</div>
+      <div class="type-weights">
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-display);font-weight:400">Aa</div><div class="type-weight-label">Regular 400</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-display);font-weight:500">Aa</div><div class="type-weight-label">Medium 500</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-display);font-weight:600">Aa</div><div class="type-weight-label">SemiBold 600</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-display);font-weight:700">Aa</div><div class="type-weight-label">Bold 700</div></div>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-family">Body — Inter</div>
+      <div class="type-preview body">Methodology is the product.<br>Receipts before adjectives.</div>
+      <div class="type-alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 !@#$%&amp;*(),.?</div>
+      <div class="type-weights">
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-body);font-weight:300">Aa</div><div class="type-weight-label">Light 300</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-body);font-weight:400">Aa</div><div class="type-weight-label">Regular 400</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-body);font-weight:500">Aa</div><div class="type-weight-label">Medium 500</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-body);font-weight:600">Aa</div><div class="type-weight-label">SemiBold 600</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-body);font-weight:700">Aa</div><div class="type-weight-label">Bold 700</div></div>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-family">Mono / Technical — JetBrains Mono</div>
+      <div class="type-preview mono">&lt;H4H/&gt; · methodology · v1.0</div>
+      <div class="type-alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 !@#$%&amp;*(),.?</div>
+      <div class="type-weights">
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-mono);font-weight:400">Aa</div><div class="type-weight-label">Regular 400</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-mono);font-weight:500">Aa</div><div class="type-weight-label">Medium 500</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-mono);font-weight:600">Aa</div><div class="type-weight-label">SemiBold 600</div></div>
+        <div class="type-weight-item"><div class="type-weight-preview" style="font-family:var(--ff-mono);font-weight:700">Aa</div><div class="type-weight-label">Bold 700</div></div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--obs-900);margin:42px 0 16px;letter-spacing:-.018em">Type Scale &amp; Hierarchy</h3>
+    <div>
+      <div class="type-scale-row"><div class="type-scale-meta"><span>Display XL · Hero</span>clamp(56px – 112px)<br>line .92 · track −2%</div><div style="font-family:var(--ff-display);font-weight:700;font-size:96px;line-height:.92;color:var(--obs-900);letter-spacing:-.035em">Harden.</div></div>
+      <div class="type-scale-row"><div class="type-scale-meta"><span>H1 · Section</span>64px / .96<br>track −1.5%</div><div style="font-family:var(--ff-display);font-weight:700;font-size:60px;line-height:.96;color:var(--obs-900);letter-spacing:-.025em">From hack. <em style="font-style:normal;color:var(--amber-600);font-weight:500">To harden.</em></div></div>
+      <div class="type-scale-row"><div class="type-scale-meta"><span>H2 · Subsection</span>44px / 1.05<br>track −1%</div><div style="font-family:var(--ff-display);font-weight:600;font-size:42px;line-height:1.05;color:var(--obs-900);letter-spacing:-.018em">Methodology, evidenced.</div></div>
+      <div class="type-scale-row"><div class="type-scale-meta"><span>H3 · Card</span>28px / 1.15</div><div style="font-family:var(--ff-display);font-weight:600;font-size:28px;line-height:1.15;color:var(--obs-900);letter-spacing:-.015em">Adversary-grade training</div></div>
+      <div class="type-scale-row"><div class="type-scale-meta"><span>Lead</span>20px / 1.55</div><div style="font-family:var(--ff-body);font-weight:400;font-size:20px;line-height:1.55;color:var(--mesh-600);max-width:56ch">A practice for learners who want to think like attackers, defenders who want to think like both, and enterprises that want to ship hardened systems.</div></div>
+      <div class="type-scale-row"><div class="type-scale-meta"><span>Body</span>16px / 1.65</div><div style="font-family:var(--ff-body);font-weight:400;font-size:16px;line-height:1.65;color:var(--mesh-600);max-width:56ch">Modern AD attacks rarely begin with credential theft. They begin with misconfigured trust relationships, over-privileged service accounts, and Kerberos delegation flaws documented since 2014 that still ship in production.</div></div>
+      <div class="type-scale-row"><div class="type-scale-meta"><span>Eyebrow / Mono</span>12px · +18% track<br>JetBrains Mono 600</div><div style="font-family:var(--ff-mono);font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan-600)">— Recon · Exploit · Harden · Verify</div></div>
+      <div class="type-scale-row"><div class="type-scale-meta"><span>Stat Numeral</span>72px · tabular<br>track −3%</div><div style="font-family:var(--ff-display);font-weight:700;font-size:72px;line-height:.9;color:var(--cyan-400);letter-spacing:-.03em;font-variant-numeric:tabular-nums">04</div></div>
+    </div>
+
+    <div class="note-box"><strong>Pairing rule:</strong> Mono eyebrow → Space Grotesk headline → Inter body. This three-line stack is the brand's typographic DNA. Body copy never drops below 16px. Captions and mono labels are permitted at 12px only for metadata.</div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 08 — Typography</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 11 — VISUAL IDENTITY LANGUAGE (09)
+     ════════════════════════════════════════════════════ -->
+<div class="page dark">
+  <div class="section-number">09</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">System</div>
+      <h2 class="section-title">Visual <em>Identity</em> Language</h2>
+      <p class="section-desc">A strict library of patterns, surfaces, and treatments. The brand's visual register is documentation-grade dark-tech with controlled luminance — quiet enough to read as serious, alive enough to feel modern. Glow is rationed. Photography is documentary. Iconography is functional, never decorative.</p>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:0 0 16px;letter-spacing:-.018em">Signature Patterns</h3>
+    <div class="pattern-grid">
+      <div class="pattern mesh"><div class="lbl"><b>The Mesh Grid</b>32 px obsidian dot-grid · used on hero and dashboard surfaces</div></div>
+      <div class="pattern trace"><div class="lbl"><b>The Trace Line</b>cyan hairline · implies methodology · section transitions only</div></div>
+      <div class="pattern glow"><div class="lbl"><b>Cyan Aura</b>radial cyan halo · used behind a single hero stat or active state</div></div>
+      <div class="pattern amber"><div class="lbl"><b>Amber Aura</b>radial amber halo · marks human-led moments, instructor work</div></div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:46px 0 16px;letter-spacing:-.018em">Card Style System</h3>
+    <div class="cardstyle-grid">
+      <div class="cardstyle cs-lab">
+        <div>
+          <span class="lbl">Lab · 04 of 12</span>
+          <h4>Active Directory: Kerberoast Lab</h4>
+        </div>
+        <span class="pill">● Running</span>
+      </div>
+      <div class="cardstyle cs-course">
+        <div>
+          <span class="lbl">Track · Defender Path</span>
+          <h4>Offense for Defenders — 12 weeks</h4>
+        </div>
+        <span class="pill">● Cohort Open</span>
+      </div>
+      <div class="cardstyle cs-finding">
+        <div>
+          <span class="lbl">Finding · F-203</span>
+          <h4>Privilege escalation via stale ACL</h4>
+        </div>
+        <span class="pill">● Critical</span>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:46px 0 16px;letter-spacing:-.018em">Imagery Direction</h3>
+    <div class="dos-donts">
+      <div class="do">
+        <h4 style="color:var(--lab-lime)">Approved Imagery</h4>
+        <ul style="color:rgba(241,240,234,.72)">
+          <li>Documentary lab photography — real practitioners, real screens, available light.</li>
+          <li>High-fidelity product renders — dashboards, lab interfaces, report PDFs.</li>
+          <li>Abstract methodology diagrams — kill-chain mappings, attack trees, in brand line-system.</li>
+          <li>Terminal &amp; code captures — color-corrected to brand palette only.</li>
+        </ul>
+      </div>
+      <div class="dont">
+        <h4 style="color:var(--crimson)">Forbidden Imagery</h4>
+        <ul style="color:rgba(241,240,234,.72)">
+          <li>Stock-photo "hooded hacker" or anonymous-mask figures.</li>
+          <li>Glowing padlock icons or globe-mesh circuit textures.</li>
+          <li>Binary-rain or "Matrix"-style backgrounds.</li>
+          <li>Cliché "team gathered around a monitor" stock photography.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note-box"><strong>Iconography:</strong> 24 px stroke icons at 1.5 px weight, drawn on a 24 px grid, geometric construction, square caps, never filled. Reference families: Phosphor Bold or Lucide; never mixed across surfaces. Every icon names a thing the user can act on — icons are functional, never decorative.</div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 09 — Visual Identity</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 12 — WEBSITE UX/UI TRANSLATION (10)
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">10</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Application</div>
+      <h2 class="section-title">Website UX/UI <em>Translation</em></h2>
+      <p class="section-desc">A first-time visitor must feel four things in the first 800 px of scroll, in this order — competence, clarity, specificity, trust. Not "wow." The homepage must broadcast the operational signals cybersecurity buyers pattern-match against: documentation density, methodology pages, real artifacts, named principals.</p>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--obs-900);margin:0 0 16px;letter-spacing:-.018em">Homepage Section Order</h3>
+    <div class="flow-list">
+      <div class="flow-row"><div class="num">01</div><div class="name">Top Navigation<small>Sticky bar · Cyan-on-Obsidian primary CTA · monogram + wordmark</small></div><div class="role">Wayfinding</div></div>
+      <div class="flow-row"><div class="num">02</div><div class="name">Hero<small>Eyebrow · pillar headline · sub-headline · two CTAs · framework alignment strip</small></div><div class="role">Conversion · Authority</div></div>
+      <div class="flow-row"><div class="num">03</div><div class="name">Trust Strip<small>Institutional &amp; enterprise logos · monochrome · Bone band</small></div><div class="role">Trust</div></div>
+      <div class="flow-row"><div class="num">04</div><div class="name">The Loop<small>Recon → Exploit → Harden → Verify · 4-step diagram on Mesh Grid</small></div><div class="role">Brand Mechanic</div></div>
+      <div class="flow-row"><div class="num">05</div><div class="name">For Whom We Build<small>Three bento tiles · Learners / Institutions / Enterprises · each links deep</small></div><div class="role">Audience Routing</div></div>
+      <div class="flow-row"><div class="num">06</div><div class="name">Capabilities<small>Six cards · Education + Services · each names a real deliverable</small></div><div class="role">Product Surface</div></div>
+      <div class="flow-row"><div class="num">07</div><div class="name">Methodology Excerpt<small>Real screenshot from a redacted report · receipts before claims</small></div><div class="role">Proof</div></div>
+      <div class="flow-row"><div class="num">08</div><div class="name">Outcomes &amp; Stats<small>Four stat numerals · hours shipped, learners certified, orgs assessed, vulns reported</small></div><div class="role">Evidence</div></div>
+      <div class="flow-row"><div class="num">09</div><div class="name">Voices<small>Two practitioner-grade testimonials · one institutional · one enterprise</small></div><div class="role">Social Proof</div></div>
+      <div class="flow-row"><div class="num">10</div><div class="name">FAQ<small>Five questions · technical answers · not marketing answers</small></div><div class="role">Friction Removal</div></div>
+      <div class="flow-row"><div class="num">11</div><div class="name">Final CTA<small>Single dense block · primary (Start Learning) + secondary (Talk to Us)</small></div><div class="role">Conversion</div></div>
+      <div class="flow-row"><div class="num">12</div><div class="name">Footer<small>Sitemap · methodology citations · accreditation marks · responsible-disclosure</small></div><div class="role">Trust · Compliance</div></div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--obs-900);margin:46px 0 16px;letter-spacing:-.018em">Interaction Discipline</h3>
+    <div class="grid-3">
+      <div class="card"><div class="meta">Motion</div><h3>Quiet Reveals</h3><p>Animations under 240 ms, ease-out, never bounce. No scroll parallax theatrics. A single type-on effect on the hero — never repeated.</p></div>
+      <div class="card"><div class="meta">Focus</div><h3>Cyan Rings</h3><p>Cyan focus rings on every interactive element. Amber on hover only for human-led CTAs (instructor cards, certification, contact).</p></div>
+      <div class="card"><div class="meta">Conversion</div><h3>Three Paths</h3><p>Learners → free starter lab → cohort. Institutions → request syllabus → discovery call. Enterprises → scope assessment → discovery call. Each path lives on its own surface.</p></div>
+    </div>
+
+    <div class="note-box"><strong>SaaS authority benchmark:</strong> The site must read at the same operational level as Snyk, HackerOne, Hack The Box for Business, and Tenable. That means documentation-grade content, real methodology pages (not gated PDFs), live status indicators, named principals with public credentials, and a redacted findings sample. <em>Conversion in this category is intentionally lower-velocity than consumer SaaS.</em></div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 10 — Website Translation</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 13 — TONE OF VOICE (11)
+     ════════════════════════════════════════════════════ -->
+<div class="page dark">
+  <div class="section-number">11</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Voice</div>
+      <h2 class="section-title">Tone of <em>Voice</em></h2>
+      <p class="section-desc">Hackin' 4 Harden speaks like a senior practitioner who is patient with curiosity and impatient with theatre. We assume the reader is intelligent. We explain without condescending. We demonstrate more than we declare.</p>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:0 0 16px;letter-spacing:-.018em">Three Voice Modes</h3>
+    <div class="voice-mode-grid">
+      <div class="voice-mode">
+        <div class="vm-num">Mode 01 · Educator</div>
+        <h3>Patient · Generous · Structured</h3>
+        <p style="color:rgba(241,240,234,.72);font-size:14px;line-height:1.65">Used in courses, write-ups, and learner-facing pages. Names every tool. Explains every step. Treats the learner as a future colleague.</p>
+        <p class="qt">"Before you can defend Active Directory, you need to attack one. We will show you exactly how — starting with the smallest possible lab, ending with a hardened domain you have personally compromised and rebuilt."</p>
+      </div>
+      <div class="voice-mode">
+        <div class="vm-num">Mode 02 · Practitioner</div>
+        <h3>Precise · Technical · Dry</h3>
+        <p style="color:rgba(241,240,234,.72);font-size:14px;line-height:1.65">Used in methodology, lab notes, advisory work. Never euphemistic. Names risks and tradeoffs. The voice of a senior IC writing for peers.</p>
+        <p class="qt">"Modern AD attacks rarely begin with credential theft. They begin with misconfigured trust relationships and Kerberos delegation flaws documented since 2014 that still ship in production."</p>
+      </div>
+      <div class="voice-mode">
+        <div class="vm-num">Mode 03 · Advisor</div>
+        <h3>Composed · Plain · Scoped</h3>
+        <p style="color:rgba(241,240,234,.72);font-size:14px;line-height:1.65">Used in sales decks and enterprise outreach. Trades buzzwords for specificity. Never bluffs. Walks away when the engagement isn't right.</p>
+        <p class="qt">"You do not need a six-month engagement. You need a two-week scoped baseline assessment, an honest report, and a defensible roadmap. We will give you all three."</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:46px 0 16px;letter-spacing:-.018em">Voice Rules — Do &amp; Don't</h3>
+    <div class="voice-rules">
+      <div class="head">Do</div>
+      <div class="head" style="background:var(--obs-700)">Don't</div>
+      <div class="row do">Lead with the verb</div><div class="row dont">Lead with the adjective</div>
+      <div class="row do">Name the tool, framework, CVE, version</div><div class="row dont">Hand-wave with "next-gen," "AI-powered"</div>
+      <div class="row do">Show the artifact</div><div class="row dont">Promise an outcome without evidence</div>
+      <div class="row do">Treat the reader as a future colleague</div><div class="row dont">Treat the reader as a marketing target</div>
+      <div class="row do">Acknowledge complexity</div><div class="row dont">Reduce nuance to a one-liner</div>
+      <div class="row do">End sentences cleanly</div><div class="row dont">Hedge or trail off</div>
+    </div>
+
+    <h3 style="font-family:var(--ff-display);font-weight:600;font-size:22px;color:var(--bone-50);margin:46px 0 12px;letter-spacing:-.018em">Brand Lexicon</h3>
+    <p style="color:rgba(241,240,234,.55);font-family:var(--ff-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600">Words we use</p>
+    <div class="lex-row">
+      <span class="chip">Engagement</span><span class="chip">Methodology</span><span class="chip">Posture</span><span class="chip">Telemetry</span><span class="chip">Adversary</span><span class="chip">Trust boundary</span><span class="chip">Hand-off</span><span class="chip">Receipts</span><span class="chip">Findings</span><span class="chip">Verification</span><span class="chip">Hardening</span><span class="chip">The Loop</span><span class="chip">Primer</span><span class="chip">Track</span><span class="chip">Cohort</span><span class="chip">Practitioner</span><span class="chip">Operator</span><span class="chip">Defender</span>
+    </div>
+    <p style="color:rgba(241,240,234,.55);font-family:var(--ff-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-top:24px">Words we avoid</p>
+    <div class="lex-row avoid">
+      <span class="chip">Cutting-edge</span><span class="chip">Best-in-class</span><span class="chip">Synergy</span><span class="chip">Robust</span><span class="chip">Innovative</span><span class="chip">Game-changing</span><span class="chip">Bulletproof</span><span class="chip">Unhackable</span><span class="chip">Military-grade</span><span class="chip">Bank-grade</span><span class="chip">Solution</span><span class="chip">Empower</span><span class="chip">Unlock</span><span class="chip">Disrupt</span><span class="chip">Revolutionary</span>
+    </div>
+
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 11 — Voice</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 14 — COMPETITIVE MARKET POSITIONING (12)
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">12</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Market</div>
+      <h2 class="section-title">Competitive <em>Positioning</em></h2>
+      <p class="section-desc">The brand stands visually adjacent to — and strategically distinct from — the four reference categories the market currently uses to make sense of cybersecurity offerings: practitioner training platforms, premium enterprise cyber, compliance vendors, and boutique offensive practices. We borrow what each does best and avoid what each gets wrong.</p>
+    </div>
+
+    <table class="comp-matrix">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Practitioner Platforms<br><span style="color:rgba(241,240,234,.55);font-weight:400;text-transform:none;letter-spacing:0">HTB · TryHackMe · OffSec</span></th>
+          <th>Enterprise Cyber<br><span style="color:rgba(241,240,234,.55);font-weight:400;text-transform:none;letter-spacing:0">Snyk · Wiz · CrowdStrike</span></th>
+          <th>Compliance-Led<br><span style="color:rgba(241,240,234,.55);font-weight:400;text-transform:none;letter-spacing:0">Vanta · Drata · Secureframe</span></th>
+          <th style="background:linear-gradient(180deg,var(--cyan-600),var(--cyan-500))">Hackin' 4 Harden</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dim">Visual Register</td>
+          <td>Gamified · neon · hoodie-coded</td>
+          <td>Polished · generic SaaS</td>
+          <td>Pastel · friendly · reassuring</td>
+          <td class="us">Documentation-grade dark-tech with human warmth</td>
+        </tr>
+        <tr>
+          <td class="dim">Voice</td>
+          <td>Hype-led · gamified</td>
+          <td>Cautious · corporate</td>
+          <td>Reassuring · simplified</td>
+          <td class="us">Practitioner-educational across three modes</td>
+        </tr>
+        <tr>
+          <td class="dim">Audience Reach</td>
+          <td>Learners only</td>
+          <td>Enterprises only</td>
+          <td>Compliance buyers</td>
+          <td class="us">Learner ↔ Institution ↔ Enterprise as one continuum</td>
+        </tr>
+        <tr>
+          <td class="dim">Product Surface</td>
+          <td>Course library / labs</td>
+          <td>Platform / tooling</td>
+          <td>SaaS dashboard</td>
+          <td class="us">Education + Services as a single practice</td>
+        </tr>
+        <tr>
+          <td class="dim">Trust Mechanism</td>
+          <td>Leaderboards · badges</td>
+          <td>Logos · SOC badges</td>
+          <td>Compliance roadmaps</td>
+          <td class="us">Open methodology · receipts · learner outcomes</td>
+        </tr>
+        <tr>
+          <td class="dim">Outcome Frame</td>
+          <td>Score / rank</td>
+          <td>Risk reduction (abstract)</td>
+          <td>Audit pass</td>
+          <td class="us">Did the system get harder to attack after we left?</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="message-block alt" style="margin-top:48px">
+      <div class="pillar-eyebrow">Strategic Conviction</div>
+      <div class="pillar-title">The premium cybersecurity brand of the next decade will not have the loudest hero animation.</div>
+      <p class="pillar-sub">It will be the one whose documentation, methodology, and outcomes are the most legible. Hackin' 4 Harden is built for that race — not the previous one.</p>
+    </div>
+
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 12 — Competitive Positioning</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 15 — CRM / LMS / DASHBOARD EXPANSION (13)
+     ════════════════════════════════════════════════════ -->
+<div class="page dark">
+  <div class="section-number">13</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Roadmap</div>
+      <h2 class="section-title">CRM · LMS · <em>Dashboard</em> Expansion</h2>
+      <p class="section-desc">The brand system scales across product surfaces without re-skinning. Each future surface inherits Obsidian foundations, Mesh neutrals, JetBrains Mono labels, and the Cyan/Amber accent discipline. New product? Inherit the palette. New audience? Use existing voice modes. The system is the discipline.</p>
+    </div>
+
+    <div class="roadmap-grid">
+      <div class="rm-card">
+        <div class="step">Surface 01 · Internal Operations</div>
+        <h3>CRM &amp; Customer Pipeline</h3>
+        <p>Institutional and enterprise pipelines inherit Bone backgrounds, Mesh hairlines, and JetBrains Mono labels. Status pills use Lab Lime / Forge Amber / Alert Crimson with strict semantic rules.</p>
+        <div class="bullets">
+          <div>Pipeline stage — mono labels, no creative naming</div>
+          <div>Status — Lime · Amber · Crimson semantics inherited</div>
+          <div>Note &amp; activity feed — Inter body, mono timestamps</div>
+        </div>
+      </div>
+
+      <div class="rm-card">
+        <div class="step">Surface 02 · Practitioner Dashboard</div>
+        <h3>Learner &amp; Enterprise Dashboard</h3>
+        <p>For learners (lab progress, certification track) and enterprise users (engagement findings, hardening backlog). Bento tile system on Obsidian 900 with 32 px corner radius. Cyan progress states.</p>
+        <div class="bullets">
+          <div>Lab status — live cyan pulse on active runs</div>
+          <div>Findings backlog — severity-coded card system</div>
+          <div>Hardening progress — amber-to-lime transition arc</div>
+        </div>
+      </div>
+
+      <div class="rm-card">
+        <div class="step">Surface 03 · Learning Management</div>
+        <h3>H4H · Academy LMS</h3>
+        <p>Course pages on Bone with Course-Card style, top-of-card amber accent rule, eyebrow naming the track. Lab interface uses Obsidian dark surface with terminal pane in JetBrains Mono.</p>
+        <div class="bullets">
+          <div>Cohort comms — brand palette transactional templates</div>
+          <div>Certificates — Bone 50 paper · embossed monogram</div>
+          <div>Lab runner — terminal-grade interface with cyan focus</div>
+        </div>
+      </div>
+
+      <div class="rm-card">
+        <div class="step">Surface 04 · Enterprise Delivery</div>
+        <h3>Engagement &amp; Findings Reports</h3>
+        <p>Bone 50 cover. Obsidian section dividers. Finding cards with severity rules — Crimson · Amber · Cyan. Methodology footer on every page. Every report ends in a hardening backlog.</p>
+        <div class="bullets">
+          <div>Cover &amp; binding — full lockup centered</div>
+          <div>Finding card system — inherits brand severity rules</div>
+          <div>Hardening hand-off section — required, not optional</div>
+        </div>
+      </div>
+
+      <div class="rm-card">
+        <div class="step">Surface 05 · Sub-Brand Architecture</div>
+        <h3>The H4H Lockup System</h3>
+        <p>Sub-brands follow a disciplined <code style="font-family:var(--ff-mono);background:rgba(194,138,32,.18);color:var(--amber-400);padding:2px 8px;border-radius:3px;font-size:13px">H4H · [Product]</code> pattern. Each inherits the master system completely — no separate palette, no separate typeface, no separate voice.</p>
+        <div class="bullets">
+          <div>H4H · Academy — Education arm</div>
+          <div>H4H · Range — Lab &amp; CTF infrastructure</div>
+          <div>H4H · Practice — Advisory &amp; assessment</div>
+          <div>H4H · Lab — Research &amp; publication</div>
+          <div>H4H · Curriculum — Institutional partnerships</div>
+        </div>
+      </div>
+
+      <div class="rm-card">
+        <div class="step">Surface 06 · Channel Expansion</div>
+        <h3>Public &amp; Print Surfaces</h3>
+        <p>GitHub presence carries methodology and lab templates with brand-voice READMEs. Conference materials use Display XL on Mesh Grid backgrounds. Print artifacts default to Bone 50 with monochrome lockup.</p>
+        <div class="bullets">
+          <div>GitHub — public methodology, lab READMEs in brand voice</div>
+          <div>Conference decks — Display XL · Mesh Grid · monogram</div>
+          <div>Mobile app — Obsidian default · Bone fallback · no third skin</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box"><strong>Growth discipline:</strong> As the brand scales across products, surfaces, and partnerships, <em>the system is the discipline</em>. Every expansion compounds the brand's credibility — never dilutes it. The master mark always anchors. The voice never code-switches. The palette never grows.</div>
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 13 — Expansion Roadmap</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 16 — FINAL STRATEGIC SUMMARY (14)
+     ════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-number">14</div>
+  <div class="page-inner">
+    <div class="section-header">
+      <div class="section-label">Synthesis</div>
+      <h2 class="section-title">Final Strategic <em>Summary</em></h2>
+      <p class="section-desc">The brand at a glance — every load-bearing decision compressed into a single reference plane. Use this page in onboarding, partner briefings, and any moment a stakeholder needs the system on one screen.</p>
+    </div>
+
+    <div class="final-grid">
+      <div class="final-card"><div class="k">Brand Name</div><div class="v">Hackin' 4 Harden</div></div>
+      <div class="final-card"><div class="k">Master Tagline</div><div class="v">From Hack. To Harden.</div></div>
+      <div class="final-card"><div class="k">Strategic Pillar</div><div class="v">Train the attacker. Build the defender. Harden the system.</div></div>
+      <div class="final-card"><div class="k">Category</div><div class="v">Cybersecurity Education + Offensive Services</div></div>
+      <div class="final-card"><div class="k">Audience Continuum</div><div class="v">Learner → Institution → Enterprise</div></div>
+      <div class="final-card"><div class="k">Voice Modes</div><div class="v">Educator · Practitioner · Advisor</div></div>
+      <div class="final-card"><div class="k">Display Type</div><div class="v">Space Grotesk · 700/600/500</div></div>
+      <div class="final-card"><div class="k">Body Type</div><div class="v">Inter · 400/500/600</div></div>
+      <div class="final-card"><div class="k">Mono Type</div><div class="v">JetBrains Mono · 500/600</div></div>
+      <div class="final-card"><div class="k">Foundation</div><div class="v">Midnight Navy · #1B2A40</div></div>
+      <div class="final-card"><div class="k">Primary Accent</div><div class="v">Augusta Green · #2E7D3F</div></div>
+      <div class="final-card"><div class="k">Ceremonial Accent</div><div class="v">Masters Gold · #C28A20</div></div>
+    </div>
+
+    <div class="mantra-strip">
+      <div class="m">
+        <div class="num">Mantra 01</div>
+        <div class="qt">We hack so we can <em>harden</em>.</div>
+      </div>
+      <div class="m">
+        <div class="num">Mantra 02</div>
+        <div class="qt">Methodology is <em>the product</em>.</div>
+      </div>
+      <div class="m">
+        <div class="num">Mantra 03</div>
+        <div class="qt">Receipts before <em>adjectives</em>.</div>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:48px"><strong>Custodianship:</strong> This brand system is owned by the Brand &amp; Strategy Office. All material updates require version increment and changelog entry. Sub-brand additions follow the <code style="font-family:var(--ff-mono);background:var(--obs-900);color:var(--amber-500);padding:2px 8px;border-radius:3px;font-size:13px">H4H · [Product]</code> pattern only. Partner adaptations of this system require written sign-off and a co-branded usage addendum.</div>
+
+    <div class="page-footer"><span class="pf-mark"><span class="dot"></span>Hackin' 4 Harden · Brand Guide</span><span>v1.0 · 14 — Strategic Summary · End of Document</span></div>
+  </div>
+</div>
+
+</body>
+</html>
