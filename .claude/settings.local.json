@@ -66,7 +66,12 @@
       "Bash(TARGET_URL=http://localhost:3002 node run.js \"C:/tmp/playwright-test-pageshealth.js\")",
       "Bash(taskkill //F //FI \"WINDOWTITLE eq next dev*\")",
       "Bash(taskkill //F //PID 1044)",
-      "Bash(TARGET_URL=http://localhost:3003 node run.js \"C:/tmp/playwright-test-nav-cleanup.js\")"
+      "Bash(TARGET_URL=http://localhost:3003 node run.js \"C:/tmp/playwright-test-nav-cleanup.js\")",
+      "WebFetch(domain:hackin4harden.com)",
+      "Bash(PORT=3019 npx next dev -p 3019)",
+      "Bash(echo \"Started PID $!\")",
+      "Bash(awk '{print $5}')",
+      "Bash(xargs -r -I{} taskkill //PID {} //F)"
     ]
   }
 }
