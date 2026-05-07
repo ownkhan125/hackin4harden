@@ -65,7 +65,8 @@
       "Bash(TARGET_URL=http://localhost:3002 node run.js \"C:/tmp/playwright-test-images4.js\")",
       "Bash(TARGET_URL=http://localhost:3002 node run.js \"C:/tmp/playwright-test-pageshealth.js\")",
       "Bash(taskkill //F //FI \"WINDOWTITLE eq next dev*\")",
-      "Bash(taskkill //F //PID 1044)"
+      "Bash(taskkill //F //PID 1044)",
+      "Bash(TARGET_URL=http://localhost:3003 node run.js \"C:/tmp/playwright-test-nav-cleanup.js\")"
     ]
   }
 }

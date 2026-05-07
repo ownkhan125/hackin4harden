@@ -46,13 +46,14 @@ export const siteConfig = {
   },
 }
 
-// Site navigation — Privacy & Terms link to SOP-required URL paths.
+// Site navigation — page routes only. Anchor links to homepage sections
+// (e.g. /#location, /#agenda) are intentionally excluded so the navbar and
+// footer stay strictly page-based. Privacy & Terms link to SOP-required
+// URL paths and live in the footer's legal row.
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'Photos', href: '/photos' },
-  { label: 'Location', href: '/#location' },
-  { label: 'Event Agenda', href: '/#agenda' },
   { label: 'Registration', href: '/registration' },
   { label: 'Contact', href: '/contact' },
 ]
