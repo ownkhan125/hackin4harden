@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 
+import { postSigned } from '@/lib/ghl-webhook'
 import { groupFoursomeId, registrationId } from '@/lib/ids'
 import { normalizePhoneForSubmit } from '@/lib/phone'
 import { priceIdForSlug, stripe } from '@/lib/stripe'
@@ -8,6 +9,10 @@ export const runtime = 'nodejs'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hackin4harden.com'
 const TOURNAMENT_DATE = process.env.TOURNAMENT_DATE || '2026-06-06'
+const SHARED_SECRET = process.env.GHL_WEBHOOK_SHARED_SECRET
+const URL_A2P_COMPLIANCE = process.env.GHL_INBOUND_WEBHOOK_URL_A2P_COMPLIANCE
+
+const yesNo = (v) => (v === 'Yes' || v === true ? 'Yes' : 'No')
 
 const trim = (s) => (typeof s === 'string' ? s.trim() : '')
 
@@ -64,6 +69,11 @@ const buildSessionMetadata = (input, regId, groupId) => {
   if (input.registration_type === 'donation') {
     md.donation_amount_cents = String(Math.round((input.amount ?? 0) * 100))
   }
+
+  /* A2P consent state — sent verbatim Yes/No so GHL can store on the
+   * contact's custom fields directly. */
+  md.sms_updates = yesNo(input.sms_updates)
+  md.sms_promo = yesNo(input.sms_promo)
 
   // Strip empty strings to stay tidy (Stripe accepts empty but it bloats the dashboard view).
   for (const k of Object.keys(md)) {
@@ -144,6 +154,37 @@ const POST = async (req) => {
     const groupId = regType === 'foursome' ? groupFoursomeId() : null
     const metadata = buildSessionMetadata(body, regId, groupId)
 
+    /* A2P compliance fan-out — fires in parallel with the Stripe Session
+     * creation. Records the consent state at the moment of form submit,
+     * regardless of whether payment completes. Per forms-compliance-
+     * pattern.md, this URL is shared across every form that collects an
+     * SMS consent checkbox. Failure here does not block checkout — we
+     * just log it loudly and let Stripe proceed. */
+    const a2pPayload = {
+      event_type: 'consent.recorded',
+      form: 'registration',
+      registration_id: regId,
+      registration_type: regType,
+      tier_slug: trim(body.tier_slug),
+      package_name: metadata.product_name ?? '',
+      tournament_date: TOURNAMENT_DATE,
+      submitted_at: new Date().toISOString(),
+      purchaser: {
+        first_name: metadata.purchaser_first ?? '',
+        last_name: metadata.purchaser_last ?? '',
+        email: metadata.purchaser_email ?? '',
+        phone: metadata.purchaser_phone ?? '',
+      },
+      sms_updates: metadata.sms_updates,
+      sms_promo: metadata.sms_promo,
+    }
+    /* Side-by-side with the Stripe call so we don't add user-perceptible
+     * latency. If the A2P endpoint is slow we still ship the user to
+     * Stripe; the compliance call retries internally. */
+    const a2pPromise = URL_A2P_COMPLIANCE
+      ? postSigned(URL_A2P_COMPLIANCE, a2pPayload, SHARED_SECRET)
+      : Promise.resolve(null)
+
     const session = await stripe().checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],
@@ -161,6 +202,24 @@ const POST = async (req) => {
         description: `${metadata.product_name ?? 'Hackin4Harden'} (${regType}) · ${regId}`,
       },
     })
+
+    /* Drain the A2P fan-out — Vercel kills background promises after the
+     * response. We wait so the delivery log lines reach Vercel logs. */
+    try {
+      const a2p = await a2pPromise
+      if (a2p) {
+        console.warn('[Checkout API] A2P consent -> GHL', {
+          regId,
+          sms_updates: a2pPayload.sms_updates,
+          sms_promo: a2pPayload.sms_promo,
+          attempts: a2p.attempts,
+          ok: a2p.ok,
+          error: a2p.error,
+        })
+      }
+    } catch (e) {
+      console.error('[Checkout API] A2P fan-out failure:', e.message)
+    }
 
     return NextResponse.json({ url: session.url, registrationId: regId })
   } catch (error) {

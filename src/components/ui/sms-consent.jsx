@@ -6,6 +6,12 @@ import { Checkbox } from '@/components/ui/form-field'
 
 import { SMS_CONSENT_INFORMATIONAL, SMS_CONSENT_PROMOTIONAL } from '@/constants/site'
 
+/* All three consent components are CONTROLLED via `checked` + `onChange`.
+ * Callers lift the consent state into their parent so /api/checkout can
+ * send the explicit Yes/No values to the A2P compliance webhook. If a
+ * caller omits both props the checkbox falls back to uncontrolled mode
+ * for backwards-compat (existing /contact form path). */
+
 /**
  * SmsConsentInline — the *informational* (transactional) consent checkbox.
  *
@@ -15,18 +21,21 @@ import { SMS_CONSENT_INFORMATIONAL, SMS_CONSENT_PROMOTIONAL } from '@/constants/
  * and HELP language verbatim, which is exactly what
  * {@link SMS_CONSENT_INFORMATIONAL} provides.
  */
-const SmsConsentInline = ({ idPrefix }) => (
+const SmsConsentInline = ({ idPrefix, checked, onChange }) => (
   <div className="bg-cream-50 border-cream-200 mt-2 rounded-md border p-3">
     <Checkbox
       id={`${idPrefix}-sms-info`}
       name="smsConsentInformational"
       label={SMS_CONSENT_INFORMATIONAL}
+      {...(onChange ? { checked: Boolean(checked), onChange } : {})}
     />
   </div>
 )
 
 SmsConsentInline.propTypes = {
   idPrefix: PropTypes.string.isRequired,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
 }
 
 /**
@@ -37,7 +46,7 @@ SmsConsentInline.propTypes = {
  * clear "Optional" label to signal the choice; full SOP-compliant copy
  * preserved via {@link SMS_CONSENT_PROMOTIONAL}.
  */
-const SmsConsentPromotional = ({ idPrefix }) => (
+const SmsConsentPromotional = ({ idPrefix, checked, onChange }) => (
   <div className="border-cream-200 bg-cream-50 space-y-2 rounded-lg border p-5">
     <p className="text-mesh-500 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
       Optional · stay in the loop
@@ -46,12 +55,15 @@ const SmsConsentPromotional = ({ idPrefix }) => (
       id={`${idPrefix}-sms-promo`}
       name="smsConsentPromotional"
       label={SMS_CONSENT_PROMOTIONAL}
+      {...(onChange ? { checked: Boolean(checked), onChange } : {})}
     />
   </div>
 )
 
 SmsConsentPromotional.propTypes = {
   idPrefix: PropTypes.string.isRequired,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
 }
 
 /**

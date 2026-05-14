@@ -257,6 +257,11 @@ const RegistrationClient = ({ groupedTiers, allTiers, initialTierId }) => {
   const [sponsor, setSponsor] = useState({ ...EMPTY_SPONSOR })
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
+  /* Controlled A2P consent state. Lifted here so /api/checkout can ship
+   * the explicit Yes/No to the compliance webhook in the same call that
+   * creates the Stripe Checkout Session. */
+  const [smsInformational, setSmsInformational] = useState(false)
+  const [smsPromotional, setSmsPromotional] = useState(false)
 
   const currentTier = useMemo(
     () => allTiers.find((t) => t.id === tier) ?? allTiers[0],
@@ -369,6 +374,10 @@ const RegistrationClient = ({ groupedTiers, allTiers, initialTierId }) => {
               notes: sponsor.notes,
             }
           : null,
+      /* A2P consent — sent verbatim as Yes/No so the compliance webhook
+       * can write the value straight onto the contact custom field. */
+      sms_updates: smsInformational ? 'Yes' : 'No',
+      sms_promo: smsPromotional ? 'Yes' : 'No',
     }
 
     try {
@@ -531,9 +540,19 @@ const RegistrationClient = ({ groupedTiers, allTiers, initialTierId }) => {
               {/* SMS consent block — both consents at the form bottom,
                   visually distinct so they don't read as one mega-block.
                   Transactional (informational) sits first; promotional
-                  in its own "Optional" card directly underneath. */}
-              <SmsConsentInline idPrefix="reg" />
-              <SmsConsentPromotional idPrefix="reg" />
+                  in its own "Optional" card directly underneath. Both
+                  are controlled so the Yes/No state is shipped to the
+                  A2P compliance webhook on submit. */}
+              <SmsConsentInline
+                idPrefix="reg"
+                checked={smsInformational}
+                onChange={(e) => setSmsInformational(e.target.checked)}
+              />
+              <SmsConsentPromotional
+                idPrefix="reg"
+                checked={smsPromotional}
+                onChange={(e) => setSmsPromotional(e.target.checked)}
+              />
 
               <div className="border-cream-200 bg-cream-50 space-y-3 rounded-lg border p-5">
                 <Checkbox

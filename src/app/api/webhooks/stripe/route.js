@@ -160,6 +160,11 @@ const ghlPayloadFromSession = (session, eventType, stripeEventId) => {
     sponsor: sponsorObj,
     donation_amount_cents:
       m.registration_type === 'donation' ? Number(m.donation_amount_cents ?? amountCents) : null,
+    /* A2P consent — captured at form submit time, carried through
+     * Stripe Session metadata so every paid registration payload also
+     * reflects the consent state on the contact record. */
+    sms_updates: undefinedToEmpty(m.sms_updates) || 'No',
+    sms_promo: undefinedToEmpty(m.sms_promo) || 'No',
     /* Flat top-level keys for the GHL merge-field picker */
     ...playerFlat,
     ...sponsorFlat,
