@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 
 import { postSigned } from '@/lib/ghl-webhook'
 import { stripe } from '@/lib/stripe'
-import { signTeamInvite } from '@/lib/team-invite-token'
 
 export const runtime = 'nodejs'
 
@@ -24,7 +23,6 @@ const PER_TYPE_FANOUT_URLS = {
  * directly. We do NOT subscribe to charge.refunded. */
 
 const TOURNAMENT_DATE = process.env.TOURNAMENT_DATE || '2026-06-06'
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hackin4harden.com'
 
 const undefinedToEmpty = (v) => (v == null ? '' : String(v))
 
@@ -135,32 +133,6 @@ const ghlPayloadFromSession = (session, eventType, stripeEventId) => {
     sponsor_notes: undefinedToEmpty(m.sponsor_notes),
   }
 
-  /* Captain-first foursome — for any P2/P3/P4 slot left blank at checkout
-   * we sign a stateless invite token here. The captain forwards the URL
-   * to their teammate, who fills it in via /team-invite/[token]. No DB:
-   * the token IS the state (HMAC-signed payload with expiry). */
-  const teamInvites = {}
-  if (m.registration_type === 'foursome') {
-    const captainName = `${m.p1_first ?? ''} ${m.p1_last ?? ''}`.trim() || 'Your team captain'
-    const teamName = undefinedToEmpty(m.p1_group_info)
-    for (const slot of [2, 3, 4]) {
-      const slotFilled =
-        undefinedToEmpty(m[`p${slot}_email`]) !== '' || undefinedToEmpty(m[`p${slot}_first`]) !== ''
-      if (slotFilled) continue
-      try {
-        const token = signTeamInvite({
-          regId: m.registration_id,
-          slot,
-          captain: captainName,
-          team: teamName,
-        })
-        teamInvites[`team_invite_url_p${slot}`] = `${SITE_URL}/team-invite/${token}`
-      } catch (err) {
-        console.error('[Stripe webhook] team invite sign failed:', err.message)
-      }
-    }
-  }
-
   const amountCents = Number(m.amount_cents ?? session.amount_total ?? 0)
   return {
     event_type: eventType,
@@ -191,13 +163,6 @@ const ghlPayloadFromSession = (session, eventType, stripeEventId) => {
     /* Flat top-level keys for the GHL merge-field picker */
     ...playerFlat,
     ...sponsorFlat,
-    /* Team invite URLs (empty slots only). Always present as keys so
-     * the GHL email template can reference them without if-defined
-     * guards — the value will simply be empty when the slot was
-     * filled at checkout. */
-    team_invite_url_p2: teamInvites.team_invite_url_p2 ?? '',
-    team_invite_url_p3: teamInvites.team_invite_url_p3 ?? '',
-    team_invite_url_p4: teamInvites.team_invite_url_p4 ?? '',
   }
 }
 

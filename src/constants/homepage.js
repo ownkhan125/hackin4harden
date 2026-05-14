@@ -200,12 +200,6 @@ export const FOUNDERS = [
     bio: 'Reach Andy at hackinforeharden@gmail.com or 480-414-8891.',
     accent: 'green',
   },
-  {
-    name: 'Matt Nebel',
-    role: 'Golf Outing Sales Manager / Tournament Coordinator',
-    bio: 'Matt Nebel coordinates the tournament with The Legacy Golf Course. Reach him at 602-305-5550.',
-    accent: 'green',
-  },
 ]
 
 // Q&A built strictly from source facts — date, venue, agenda, tier list, contacts.
@@ -232,7 +226,7 @@ export const FAQS = [
   },
   {
     q: 'Who do I contact with questions?',
-    a: 'Andy Harden — hackinforeharden@gmail.com or 480-414-8891. For tournament logistics at the course, reach Matt Nebel, Golf Outing Sales Manager / Tournament Coordinator at The Legacy Golf Course, at 602-305-5550.',
+    a: 'Andy Harden — hackinforeharden@gmail.com or 480-414-8891.',
   },
 ]
 

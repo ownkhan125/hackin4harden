@@ -25,6 +25,8 @@ import {
   Utensils,
 } from 'lucide-react'
 
+import { formatPhoneInput } from '@/lib/phone'
+
 import FadeIn from '@/components/motion/fade-in'
 import MotionCard from '@/components/motion/motion-card'
 import Stagger from '@/components/motion/stagger'
@@ -95,18 +97,8 @@ const EMPTY_PLAYER = { fullName: '', email: '', phone: '', groupInfo: '', notes:
 
 const EMPTY_SPONSOR = { company: '', website: '', logoUrl: '', notes: '' }
 
-/* "Complete" for the lead means all of name/email/phone are filled.
- * For the other three slots we accept either fully empty (the captain
- * will send invite links after payment) OR fully complete. A partial
- * entry blocks submit since GHL would inherit half a contact. */
 const isPlayerComplete = (p) =>
   p.fullName.trim() !== '' && p.email.trim() !== '' && p.phone.trim() !== ''
-
-const isPlayerEmpty = (p) =>
-  p.fullName.trim() === '' && p.email.trim() === '' && p.phone.trim() === ''
-
-const isPlayerValidForCaptainFirst = (p, isLead) =>
-  isLead ? isPlayerComplete(p) : isPlayerEmpty(p) || isPlayerComplete(p)
 
 const fallbackBlurb = (category) => {
   if (category === 'donation') return 'Donation to the Joshua Cole Harden Scholarship Fund.'
@@ -314,27 +306,16 @@ const RegistrationClient = ({ groupedTiers, allTiers, initialTierId }) => {
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  /* Captain-first flow: P1 must be complete; P2-P4 must each be either
-   * fully empty (we'll send the captain an invite link after payment)
-   * or fully complete. */
-  const captainComplete = isPlayerComplete(players[0])
-  const teammatesValid = players
-    .slice(1)
-    .every((p) => isPlayerEmpty(p) || isPlayerComplete(p))
-  const foursomeReady = captainComplete && teammatesValid
-  const individualReady = !isFoursome || foursomeReady
+  const allPlayersComplete = players.every(isPlayerComplete)
+  const individualReady = !isFoursome || allPlayersComplete
 
   const sponsorReady = category !== 'sponsor' || sponsor.company.trim() !== ''
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSubmitError('')
-    if (isFoursome && !foursomeReady) {
-      setSubmitError(
-        captainComplete
-          ? 'Please either complete or fully clear each teammate. Partial entries block submit.'
-          : 'Please complete the captain section (name, email, phone) before continuing.',
-      )
+    if (isFoursome && !allPlayersComplete) {
+      setSubmitError('Please complete all four players (name, email, phone) before continuing.')
       return
     }
     if (!sponsorReady) {
@@ -472,15 +453,6 @@ const RegistrationClient = ({ groupedTiers, allTiers, initialTierId }) => {
                   or call <span className="text-navy-900 font-semibold">480-414-8891</span>.
                 </p>
               </div>
-              <div>
-                <p className="text-mesh-500 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
-                  Tournament logistics
-                </p>
-                <p className="text-mesh-700 mt-2">
-                  Matt Nebel · Golf Outing Sales Manager / Tournament Coordinator at The Legacy Golf
-                  Course · <span className="text-navy-900 font-semibold">602-305-5550</span>
-                </p>
-              </div>
             </div>
           </div>
 
@@ -556,6 +528,11 @@ const RegistrationClient = ({ groupedTiers, allTiers, initialTierId }) => {
                 <SponsorBlock sponsor={sponsor} updateSponsor={updateSponsor} />
               ) : null}
 
+              {/* SMS consent block — both consents at the form bottom,
+                  visually distinct so they don't read as one mega-block.
+                  Transactional (informational) sits first; promotional
+                  in its own "Optional" card directly underneath. */}
+              <SmsConsentInline idPrefix="reg" />
               <SmsConsentPromotional idPrefix="reg" />
 
               <div className="border-cream-200 bg-cream-50 space-y-3 rounded-lg border p-5">
@@ -611,8 +588,7 @@ const RegistrationClient = ({ groupedTiers, allTiers, initialTierId }) => {
                 </Button>
                 {isFoursome && !individualReady ? (
                   <p className="text-mesh-500 text-xs">
-                    Player 1 is required. Player 2–4 are optional — we&apos;ll email you invite
-                    links to forward to your teammates after payment.
+                    Complete all four players (name, email, phone) to enable submission.
                   </p>
                 ) : null}
                 <p className="text-mesh-500 text-xs">
@@ -700,16 +676,11 @@ const PurchaserBlock = ({ category, purchaser, updatePurchaser, isIndividualGolf
             name="phone"
             type="tel"
             autoComplete="tel"
-            placeholder="(480) 555-0123"
+            placeholder="+1 (xxx) xxx-xxxx"
             value={purchaser.phone}
-            onChange={(e) => updatePurchaser('phone', e.target.value)}
+            onChange={(e) => updatePurchaser('phone', formatPhoneInput(e.target.value))}
             required={isIndividualGolfer}
           />
-          {/* Inline transactional SMS consent — placed adjacent to the
-              phone field so it reads as part of the contact section, not
-              a standalone legal checkbox. SOP-required full compliance
-              copy is preserved inside the component. */}
-          <SmsConsentInline idPrefix="reg" />
         </Field>
       </div>
       <Field id="reg-org" label={labels.org}>
@@ -808,13 +779,12 @@ const FoursomePanel = ({ players, activePlayer, setActivePlayer, updatePlayer })
           Foursome registration
         </p>
         <p className="text-mesh-600 mt-0.5 text-xs leading-relaxed">
-          Player 1 (the captain) is required. Player 2–4 are optional — we&apos;ll email you
-          invite links to forward to your teammates after payment.
+          Player 1 is the lead contact. Name, email and phone are required for all four players.
         </p>
       </div>
       <div className="flex-none text-right">
         <p className="text-mesh-500 font-mono text-[10px] font-semibold tracking-[0.2em] uppercase">
-          Filled
+          Complete
         </p>
         <p className="font-display text-navy-900 text-xl leading-none font-bold tabular-nums">
           {players.filter(isPlayerComplete).length}
@@ -921,32 +891,17 @@ const FoursomePanel = ({ players, activePlayer, setActivePlayer, updatePlayer })
                   <span className="text-mesh-500 ml-1.5 font-sans text-xs font-normal">
                     · primary registrant
                   </span>
-                ) : (
-                  <span className="text-mesh-500 ml-1.5 font-sans text-xs font-normal">
-                    · optional
-                  </span>
-                )}
+                ) : null}
               </h4>
               {isLead ? (
                 <Badge variant="green" className="ml-auto">
                   Lead contact
                 </Badge>
-              ) : (
-                <Badge variant="mono" className="ml-auto">
-                  Optional
-                </Badge>
-              )}
+              ) : null}
             </div>
 
-            {!isLead ? (
-              <p className="text-mesh-500 mt-3 text-xs leading-relaxed">
-                You can fill these now, or we&apos;ll email Player 1 an invite link to forward to
-                this teammate after payment. They&apos;ll add their own info.
-              </p>
-            ) : null}
-
             <div className="mt-4 grid gap-4 md:grid-cols-3">
-              <Field id={`${idBase}-name`} label="Full name" required={isLead}>
+              <Field id={`${idBase}-name`} label="Full name" required>
                 <Input
                   id={`${idBase}-name`}
                   name={`player${playerNum}.fullName`}
@@ -954,10 +909,10 @@ const FoursomePanel = ({ players, activePlayer, setActivePlayer, updatePlayer })
                   autoComplete={isLead ? 'name' : 'off'}
                   value={player.fullName}
                   onChange={(e) => updatePlayer(index, 'fullName', e.target.value)}
-                  required={isLead}
+                  required
                 />
               </Field>
-              <Field id={`${idBase}-email`} label="Email" required={isLead}>
+              <Field id={`${idBase}-email`} label="Email" required>
                 <Input
                   id={`${idBase}-email`}
                   name={`player${playerNum}.email`}
@@ -965,24 +920,20 @@ const FoursomePanel = ({ players, activePlayer, setActivePlayer, updatePlayer })
                   autoComplete={isLead ? 'email' : 'off'}
                   value={player.email}
                   onChange={(e) => updatePlayer(index, 'email', e.target.value)}
-                  required={isLead}
+                  required
                 />
               </Field>
-              <Field id={`${idBase}-phone`} label="Phone" required={isLead}>
+              <Field id={`${idBase}-phone`} label="Phone" required>
                 <Input
                   id={`${idBase}-phone`}
                   name={`player${playerNum}.phone`}
                   type="tel"
                   autoComplete={isLead ? 'tel' : 'off'}
-                  placeholder="(480) 555-0123"
+                  placeholder="+1 (xxx) xxx-xxxx"
                   value={player.phone}
-                  onChange={(e) => updatePlayer(index, 'phone', e.target.value)}
-                  required={isLead}
+                  onChange={(e) => updatePlayer(index, 'phone', formatPhoneInput(e.target.value))}
+                  required
                 />
-                {/* Inline transactional SMS consent — captain (Player 1)
-                    only. The other players' phones are for event-day staff
-                    use; we don't text them campaign-level confirmations. */}
-                {isLead ? <SmsConsentInline idPrefix="reg" /> : null}
               </Field>
             </div>
 

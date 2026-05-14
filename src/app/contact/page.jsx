@@ -28,12 +28,6 @@ const CONTACTS = [
     email: 'hackinforeharden@gmail.com',
     phone: '480-414-8891',
   },
-  {
-    icon: User,
-    name: 'Matt Nebel',
-    role: 'Golf Outing Sales Manager / Tournament Coordinator · The Legacy Golf Course',
-    phone: '602-305-5550',
-  },
 ]
 
 const ContactPage = () => {
@@ -53,7 +47,7 @@ const ContactPage = () => {
             <span className="text-gold-400">Contact</span> Us.
           </>
         }
-        lead="Reach the Harden family or the tournament coordinator at The Legacy Golf Course."
+        lead="Reach Andy Harden directly for any question about the tournament, sponsorships, or the Joshua Cole Harden Scholarship Fund."
       />
 
       {/* Direct contact cards */}
@@ -62,13 +56,13 @@ const ContactPage = () => {
           eyebrow="Direct contact"
           title={
             <>
-              <span className="text-green-500">Andy Harden</span> · Matt Nebel.
+              <span className="text-green-500">Andy Harden</span>.
             </>
           }
-          lead="Names and numbers as listed on the source contact page."
+          lead="The single point of contact for everything related to Hackin' for Harden."
         />
 
-        <Stagger className="mt-14 grid gap-6 md:grid-cols-2" delay={0.1}>
+        <Stagger className="mt-14 grid gap-6" delay={0.1}>
           {CONTACTS.map((c) => {
             const Icon = c.icon
             return (

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { ArrowRight, Compass, MapPin, Phone } from 'lucide-react'
+import { ArrowRight, Compass, MapPin } from 'lucide-react'
 
 import FadeIn from '@/components/motion/fade-in'
 import MotionCard from '@/components/motion/motion-card'
@@ -63,15 +63,6 @@ const Location = () => {
               <div className="text-mesh-700 flex items-start gap-3 text-sm">
                 <Compass className="mt-0.5 h-4 w-4 flex-none text-green-500" strokeWidth={1.75} />
                 <span>Course: Legacy</span>
-              </div>
-              <div className="text-mesh-700 flex items-start gap-3 text-sm">
-                <Phone className="mt-0.5 h-4 w-4 flex-none text-green-500" strokeWidth={1.75} />
-                <a
-                  href="tel:6023055550"
-                  className="text-navy-900 font-semibold hover:text-green-600"
-                >
-                  602-305-5550
-                </a>
               </div>
             </div>
 

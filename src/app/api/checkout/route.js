@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { groupFoursomeId, registrationId } from '@/lib/ids'
+import { normalizePhoneForSubmit } from '@/lib/phone'
 import { priceIdForSlug, stripe } from '@/lib/stripe'
 
 export const runtime = 'nodejs'
@@ -28,7 +29,10 @@ const buildSessionMetadata = (input, regId, groupId) => {
   md.purchaser_first = trim(p.firstName)
   md.purchaser_last = trim(p.lastName)
   md.purchaser_email = trim(p.email)
-  md.purchaser_phone = trim(p.phone)
+  /* Phone is normalized into the canonical +1 (xxx) xxx-xxxx shape. A
+   * partial value (less than 10 digits) becomes an empty string — we
+   * never ship half a phone number to Stripe or GHL. */
+  md.purchaser_phone = normalizePhoneForSubmit(p.phone)
   md.purchaser_org = trim(p.organization)
   md.purchaser_notes = trim(p.notes).slice(0, 480)
 
@@ -43,7 +47,7 @@ const buildSessionMetadata = (input, regId, groupId) => {
       md[`p${k}_last`] = last
       md[`p${k}_full_name`] = fullName
       md[`p${k}_email`] = trim(player.email)
-      md[`p${k}_phone`] = trim(player.phone)
+      md[`p${k}_phone`] = normalizePhoneForSubmit(player.phone)
       md[`p${k}_group_info`] = trim(player.groupInfo).slice(0, 480)
       md[`p${k}_notes`] = trim(player.notes).slice(0, 480)
     })
@@ -82,41 +86,36 @@ const POST = async (req) => {
     if (!priceId)
       return NextResponse.json({ error: `Unknown tier: ${slug}` }, { status: 400 })
 
-    /* Foursome — captain-first flow. Player 1 (the captain) is required;
-     * Players 2–4 may be either fully empty (we'll generate JWT invite
-     * tokens after payment so the captain can forward them to teammates)
-     * or fully complete. A partial entry on any slot is a 400. */
+    /* Foursome validation: all four players require name, email, and a
+     * normalize-able 10-digit phone. Player 1 also acts as the purchaser,
+     * so we backfill body.purchaser from players[0] if the client didn't
+     * send it explicitly. */
     if (regType === 'foursome') {
       const players = Array.isArray(body.players) ? body.players : []
       if (players.length !== 4) {
-        return NextResponse.json({ error: 'Foursome requires 4 player slots' }, { status: 400 })
+        return NextResponse.json({ error: 'Foursome requires 4 players' }, { status: 400 })
       }
-      const lead = players[0] ?? {}
-      if (!trim(lead.fullName) || !trim(lead.email) || !trim(lead.phone)) {
-        return NextResponse.json(
-          { error: 'Player 1 (captain) is missing required fields' },
-          { status: 400 },
-        )
-      }
-      for (let i = 1; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         const p = players[i] ?? {}
-        const filled = [p.fullName, p.email, p.phone].map(trim)
-        const someFilled = filled.some((v) => v !== '')
-        const allFilled = filled.every((v) => v !== '')
-        if (someFilled && !allFilled) {
+        if (
+          !trim(p.fullName) ||
+          !trim(p.email) ||
+          normalizePhoneForSubmit(p.phone) === ''
+        ) {
           return NextResponse.json(
-            {
-              error: `Player ${i + 1} has partial info. Either complete name, email, and phone, or clear all three so we send an invite link.`,
-            },
+            { error: `Player ${i + 1} is missing required fields` },
             { status: 400 },
           )
         }
       }
+      const lead = players[0]
       const parts = trim(lead.fullName).split(/\s+/)
       body.purchaser = {
         firstName: trim(body.purchaser?.firstName) || parts[0] || '',
         lastName: trim(body.purchaser?.lastName) || parts.slice(1).join(' '),
         email: trim(body.purchaser?.email) || trim(lead.email),
+        /* Inherit raw phone from lead; buildSessionMetadata will
+         * normalize once at the final write to Stripe metadata. */
         phone: trim(body.purchaser?.phone) || trim(lead.phone),
         organization: trim(body.purchaser?.organization) || trim(lead.groupInfo),
         notes: trim(body.purchaser?.notes) || trim(lead.notes),

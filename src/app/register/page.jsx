@@ -192,38 +192,27 @@ const RegisterPage = () => {
       </Section>
 
       <Section id="contact-block" className="bg-cream-50">
-        <div className="border-cream-200 grid gap-8 rounded-2xl border bg-white p-8 sm:grid-cols-2 sm:p-10">
-          <div>
-            <p className="text-mesh-500 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
-              Need to talk first?
-            </p>
-            <p className="text-mesh-700 mt-2 text-sm">
-              Reach Andy Harden directly at{' '}
-              <a
-                href="mailto:hackinforeharden@gmail.com"
-                className="font-semibold text-green-600 hover:underline"
-              >
-                hackinforeharden@gmail.com
-              </a>{' '}
-              or call{' '}
-              <a
-                href={`tel:${siteConfig.contactPhone.replace(/\D/g, '')}`}
-                className="text-navy-900 inline-flex items-center gap-1.5 font-semibold underline-offset-4 hover:underline"
-              >
-                <Phone className="h-3.5 w-3.5" /> {siteConfig.contactPhone}
-              </a>
-              .
-            </p>
-          </div>
-          <div>
-            <p className="text-mesh-500 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
-              Tournament logistics
-            </p>
-            <p className="text-mesh-700 mt-2 text-sm">
-              Matt Nebel · Golf Outing Sales Manager / Tournament Coordinator at The Legacy Golf
-              Course · <span className="text-navy-900 font-semibold">602-305-5550</span>
-            </p>
-          </div>
+        <div className="border-cream-200 mx-auto max-w-3xl rounded-2xl border bg-white p-8 text-center sm:p-10">
+          <p className="text-mesh-500 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
+            Need to talk first?
+          </p>
+          <p className="text-mesh-700 mt-3 text-sm">
+            Reach Andy Harden directly at{' '}
+            <a
+              href="mailto:hackinforeharden@gmail.com"
+              className="font-semibold text-green-600 hover:underline"
+            >
+              hackinforeharden@gmail.com
+            </a>{' '}
+            or call{' '}
+            <a
+              href={`tel:${siteConfig.contactPhone.replace(/\D/g, '')}`}
+              className="text-navy-900 inline-flex items-center gap-1.5 font-semibold underline-offset-4 hover:underline"
+            >
+              <Phone className="h-3.5 w-3.5" /> {siteConfig.contactPhone}
+            </a>
+            .
+          </p>
         </div>
       </Section>
     </main>

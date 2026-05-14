@@ -25,11 +25,17 @@ const isActiveLink = (pathname, href) => {
 // navbar is in its transparent state over these heroes, it must flip to a
 // light treatment for legibility. Once scrolled, the cream surface kicks in
 // and we revert to the dark-on-cream treatment regardless of page.
+//
+// Every page using <PageHero> belongs here. The home page uses a separate
+// cream Hero, so it stays out.
 const DARK_HERO_PATHS = [
   '/about',
   '/contact',
   '/photos',
   '/registration',
+  '/register',
+  '/sponsor',
+  '/donate',
   '/privacy-policy',
   '/terms-of-service',
 ]

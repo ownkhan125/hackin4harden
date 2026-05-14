@@ -98,7 +98,7 @@ const Faq = () => {
                   Event details, sponsorship, <span className="text-green-500">contact</span>.
                 </>
               }
-              lead="Date, venue, agenda, sponsorship tiers, and direct contact information for Andy Harden and Matt Nebel."
+              lead="Date, venue, agenda, sponsorship tiers, and direct contact information for Andy Harden."
             />
 
             <div className="border-cream-200 mt-10 hidden border-t pt-8 lg:block">
