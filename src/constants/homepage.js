@@ -37,31 +37,22 @@ export const TRUST_LOGOS = [
   { name: 'In Memory of Joshua Cole Harden' },
 ]
 
-// Why give / why play — every line is a paraphrase of source about-us text only.
+// Why give / why play — the two cards that survive after the Operation
+// 1776 consolidation (Fix 14). The dropped cards repeated the section
+// heading and duplicated the venue / beneficiary content that already
+// appears elsewhere on the home page (Location + the impact metrics).
 export const WHY_WE_WIN = [
-  {
-    icon: Heart,
-    title: 'Honor and celebrate Josh',
-    description:
-      'Each year this event is a great opportunity to honor and celebrate Josh, while simultaneously giving back to an organization and sport that was his passion.',
-  },
   {
     icon: HandHeart,
     title: 'Grow the Scholarship Fund',
     description:
-      'Since 2015, with generous participation from golfers and supporters like you, the year over year donations to the Joshua Cole Harden Scholarship Fund have steadily grown — bringing meaningful purpose and a lasting legacy in honor of Josh.',
-  },
-  {
-    icon: Trophy,
-    title: 'Play The Legacy in Phoenix',
-    description:
-      'The Legacy Golf Club in Phoenix has hosted this event all eleven years and will do so again this year. Legacy is where Josh worked and it represented his Golfing Family in Arizona.',
+      'Since 2015, donations to the Joshua Cole Harden Scholarship Fund have steadily grown — building a lasting legacy in Josh’s name.',
   },
   {
     icon: Users,
-    title: 'Support The First Tee of Phoenix',
+    title: 'Support First Tee kids',
     description:
-      'Josh loved The First Tee and what it provides to kids who have never experienced golf before. He often would comment on how it reminded him of when he first started playing at 8 years old.',
+      'Josh loved what The First Tee provides to kids new to golf. Your contribution gives the next generation the same start he had at age 8.',
   },
 ]
 
@@ -111,6 +102,7 @@ export const ECOSYSTEM = [
     description: 'Top-tier sponsorship of the 11th Annual Hackin’ for Harden.',
     span: 'lg:col-span-3 lg:row-span-2',
     accent: 'gold',
+    href: '/registration?tier=platinum#sponsorships',
   },
   {
     icon: Trophy,
@@ -119,6 +111,7 @@ export const ECOSYSTEM = [
     description: 'Gold Sponsor and Golf Shirt Sponsorship are both available at the $5,000 tier.',
     span: 'lg:col-span-3',
     accent: 'gold',
+    href: '/registration#sponsorships',
   },
   {
     icon: Medal,
@@ -127,6 +120,7 @@ export const ECOSYSTEM = [
     description: 'Silver-tier sponsorship of the tournament.',
     span: 'lg:col-span-3',
     accent: 'green',
+    href: '/registration?tier=silver#sponsorships',
   },
   {
     icon: Flag,
@@ -135,6 +129,7 @@ export const ECOSYSTEM = [
     description: 'Flag Sponsorship and Golf Cart Sponsorship are $1,000. Hole Sponsorship is $500.',
     span: 'lg:col-span-2',
     accent: 'green',
+    href: '/registration#sponsorships',
   },
   {
     icon: Target,
@@ -144,6 +139,7 @@ export const ECOSYSTEM = [
       '18 holes with cart, breakfast, BBQ lunch buffet, prizes, hole-in-one contest, and proximity prizes.',
     span: 'lg:col-span-2',
     accent: 'gold',
+    href: '/registration?tier=individual#tickets',
   },
   {
     icon: HandHeart,
@@ -153,6 +149,7 @@ export const ECOSYSTEM = [
       'Donations are accepted at $500, $300, $250, $200, and $100. Reception Luncheon is $100.',
     span: 'lg:col-span-2',
     accent: 'green',
+    href: '/registration#donations',
   },
 ]
 

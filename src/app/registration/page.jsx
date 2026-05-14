@@ -11,10 +11,16 @@ import { fetchGHLProducts } from '@/lib/ghl'
 
 export const revalidate = 60
 
-const RegistrationPage = async () => {
+const RegistrationPage = async ({ searchParams }) => {
+  const params = await searchParams
   const products = await fetchGHLProducts()
   const allTiers = buildTiers(products)
   const groupedTiers = groupTiersByCategory(allTiers)
+  /* Allow deep-linking from the homepage with /registration?tier=platinum.
+   * If the slug exists in the tier list, the client uses it as the initial
+   * selection; otherwise it falls back to the featured/Foursome tier. */
+  const requestedTier = typeof params?.tier === 'string' ? params.tier : null
+  const initialTierId = allTiers.some((t) => t.id === requestedTier) ? requestedTier : null
 
   return (
     <main>
@@ -47,7 +53,11 @@ const RegistrationPage = async () => {
         </div>
       </PageHero>
 
-      <RegistrationClient allTiers={allTiers} groupedTiers={groupedTiers} />
+      <RegistrationClient
+        allTiers={allTiers}
+        groupedTiers={groupedTiers}
+        initialTierId={initialTierId}
+      />
     </main>
   )
 }

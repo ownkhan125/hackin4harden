@@ -95,7 +95,14 @@
       "Bash(node run.js \"C:/Users/Dev/AppData/Local/Temp/playwright-h4h-decline-flow.js\")",
       "Bash(rm -f /tmp/h4h-dev-restart.log)",
       "Bash(grep -q \"Ready in\" /tmp/h4h-dev-restart.log)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(node run.js \"C:/Users/Dev/AppData/Local/Temp/h4h-html-to-pdf.js\")",
+      "Bash(node run.js \"C:/Users/Dev/AppData/Local/Temp/h4h-ecosystem-link-test.js\")",
+      "Bash(node run.js \"C:/Users/Dev/AppData/Local/Temp/h4h-fixes-smoke-test.js\")",
+      "Bash(git fetch *)",
+      "Bash(git pull *)"
     ]
   }
 }

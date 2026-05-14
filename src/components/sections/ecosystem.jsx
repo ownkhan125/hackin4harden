@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { ArrowUpRight } from 'lucide-react'
 
 import MotionCard from '@/components/motion/motion-card'
@@ -36,6 +38,7 @@ const Ecosystem = () => {
         {ECOSYSTEM?.map((card) => {
           const Icon = card.icon
 
+          const href = card.href ?? '/registration'
           return (
             <StaggerItem
               key={card.title}
@@ -44,37 +47,43 @@ const Ecosystem = () => {
                 card.span ?? 'lg:col-span-2',
               )}
             >
-              <MotionCard
-                glow={card.accent === 'gold' ? 'gold' : 'green'}
-                className="border-navy-700 bg-navy-900 flex h-full flex-col overflow-hidden rounded-2xl border p-7"
+              <Link
+                href={href}
+                aria-label={`Choose ${card.title} on the registration page`}
+                className="block h-full rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
               >
-                <div
-                  className={cn('absolute inset-x-7 top-0 h-[3px]', ACCENT_RULE[card.accent])}
-                  aria-hidden
-                />
-
-                <div className="flex items-start justify-between gap-4">
-                  <div className="border-navy-700 bg-navy-800 group-hover/card:border-navy-600 flex h-11 w-11 items-center justify-center rounded-lg border transition-colors duration-300">
-                    <Icon className={cn('h-5 w-5', ACCENT_ICON[card.accent])} strokeWidth={1.5} />
-                  </div>
-                  <ArrowUpRight
-                    className="text-cream-100/40 group-hover/card:text-cream-50 h-4 w-4 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:translate-x-1 group-hover/card:-translate-y-1"
-                    strokeWidth={1.5}
+                <MotionCard
+                  glow={card.accent === 'gold' ? 'gold' : 'green'}
+                  className="border-navy-700 bg-navy-900 hover:border-navy-600 flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border p-7 transition-colors"
+                >
+                  <div
+                    className={cn('absolute inset-x-7 top-0 h-[3px]', ACCENT_RULE[card.accent])}
+                    aria-hidden
                   />
-                </div>
 
-                <div className="mt-6 flex-1">
-                  <p className="text-gold-400 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
-                    {card.sub}
-                  </p>
-                  <h3 className="font-display text-cream-50 mt-2 text-2xl font-semibold tracking-tight">
-                    {card.title}
-                  </h3>
-                  <p className="text-cream-100/72 mt-3 text-sm leading-relaxed">
-                    {card.description}
-                  </p>
-                </div>
-              </MotionCard>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="border-navy-700 bg-navy-800 group-hover/card:border-navy-600 flex h-11 w-11 items-center justify-center rounded-lg border transition-colors duration-300">
+                      <Icon className={cn('h-5 w-5', ACCENT_ICON[card.accent])} strokeWidth={1.5} />
+                    </div>
+                    <ArrowUpRight
+                      className="text-cream-100/40 group-hover/card:text-cream-50 h-4 w-4 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:translate-x-1 group-hover/card:-translate-y-1"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+
+                  <div className="mt-6 flex-1">
+                    <p className="text-gold-400 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
+                      {card.sub}
+                    </p>
+                    <h3 className="font-display text-cream-50 mt-2 text-2xl font-semibold tracking-tight">
+                      {card.title}
+                    </h3>
+                    <p className="text-cream-100/72 mt-3 text-sm leading-relaxed">
+                      {card.description}
+                    </p>
+                  </div>
+                </MotionCard>
+              </Link>
             </StaggerItem>
           )
         })}

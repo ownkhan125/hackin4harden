@@ -50,17 +50,23 @@ export const siteConfig = {
 // (e.g. /#location, /#agenda) are intentionally excluded so the navbar and
 // footer stay strictly page-based. Privacy & Terms link to SOP-required
 // URL paths and live in the footer's legal row.
+//
+// Three-path CTA architecture: Register / Sponsor / Donate replace the
+// single "Registration" entry. /registration still resolves and remains
+// reachable as the full catalog from deep links inside each page.
+// "Photos" is dropped from primary nav and lives as a cross-link on /about.
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Photos', href: '/photos' },
-  { label: 'Registration', href: '/registration' },
+  { label: 'Register', href: '/register' },
+  { label: 'Sponsor', href: '/sponsor' },
+  { label: 'Donate', href: '/donate' },
+  { label: 'About Josh', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ]
 
 export const PRIMARY_CTA = {
-  label: 'Register / Sponsor',
-  href: '/registration',
+  label: 'Register',
+  href: '/register',
 }
 
 /* SMS consent checkbox language — verbatim format required by the

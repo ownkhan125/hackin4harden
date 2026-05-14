@@ -5,7 +5,7 @@ import { priceIdForSlug, stripe } from '@/lib/stripe'
 
 export const runtime = 'nodejs'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hackin4harden.vercel.app'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://hackin4harden.com'
 const TOURNAMENT_DATE = process.env.TOURNAMENT_DATE || '2026-06-06'
 
 const trim = (s) => (typeof s === 'string' ? s.trim() : '')

@@ -13,10 +13,10 @@ const WhyWeWin = () => {
         eyebrow="In honor of Joshua Cole Harden"
         title={
           <>
-            Honor and <span className="text-green-500">celebrate</span> Josh.
+            Where your <span className="text-green-500">support</span> goes.
           </>
         }
-        lead="Each year this event is a great opportunity to honor and celebrate Josh, while simultaneously giving back to an organization and sport that was his passion. Since 2015, the year over year donations to the Joshua Cole Harden Scholarship Fund have steadily grown."
+        lead="Every dollar from the tournament splits between the Joshua Cole Harden Scholarship Fund and The First Tee of Phoenix — the two causes Josh cared about most."
       />
 
       <Stagger className="no-scrollbar mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 scroll-px-5 sm:mt-14 sm:mx-0 sm:grid sm:snap-none sm:gap-6 sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 sm:scroll-px-0 lg:gap-7">

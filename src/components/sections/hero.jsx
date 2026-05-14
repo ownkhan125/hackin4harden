@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { motion } from 'motion/react'
-import { ArrowRight, CalendarRange, Heart, MapPin } from 'lucide-react'
+import { ArrowRight, CalendarRange, HandHeart, Heart, MapPin, Phone } from 'lucide-react'
 
 import Button from '@/components/ui/button'
 import Container from '@/components/ui/container'
@@ -60,32 +60,42 @@ const Hero = () => {
               </span>
               <span className="bg-mesh-400 h-1 w-1 rounded-full" aria-hidden />
               <span className="text-mesh-700 font-mono text-[11px] font-semibold tracking-[0.28em] uppercase">
-                Saturday · June 6, 2026 · Phoenix, AZ
+                Saturday · June 6, 2026 · The Legacy Golf Club, Phoenix
               </span>
             </motion.div>
 
-            {/* Title — verbatim source: "2026 Hackin' For Harden" */}
+            {/* Title — keep the gold "for" emphasis; copy condensed to the
+                event name itself so the sub-headline can carry the context. */}
             <motion.h1
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.1, ease: EASE.outSoft }}
               className="font-display text-navy-900 mt-8 text-[44px] leading-[1.04] font-semibold tracking-[-0.025em] sm:text-[60px] lg:text-[72px]"
             >
-              2026 Hackin&apos;
+              Hackin&apos;
               <br />
               <span className="text-gold-500">for</span> Harden.
             </motion.h1>
 
-            {/* Source: home.txt — welcome paragraph (verbatim) */}
+            {/* Sub-headline — explains what the event is in one sentence. */}
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.22, ease: EASE.outSoft }}
-              className="text-mesh-700 mt-7 max-w-2xl text-lg leading-[1.7] sm:text-xl"
+              transition={{ duration: 0.85, delay: 0.18, ease: EASE.outSoft }}
+              className="text-navy-900 font-display mt-5 max-w-2xl text-xl font-medium tracking-tight sm:text-2xl"
             >
-              Welcome to the 11th Annual Hackin&apos; for Harden memorial golf tournament in honor
-              of Joshua Cole Harden. In partnership with The Legacy Golf Course and The First Tee of
-              Phoenix, registration for this year&apos;s tournament is now OPEN.
+              A memorial golf tournament for Joshua Cole Harden.
+            </motion.p>
+
+            {/* Lead paragraph — cause and recurrence. */}
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, delay: 0.26, ease: EASE.outSoft }}
+              className="text-mesh-700 mt-5 max-w-2xl text-lg leading-[1.7]"
+            >
+              Since 2015, we&apos;ve gathered to honor Josh and grow the Scholarship Fund in his
+              name — benefiting kids at The First Tee of Phoenix. Join us June 6 for our 11th year.
             </motion.p>
 
             {/* Source: home.txt — partners explicitly named */}
@@ -103,7 +113,9 @@ const Hero = () => {
               </span>
             </motion.p>
 
-            {/* CTAs map directly to source actions: Registration + Sponsors */}
+            {/* CTAs — three conversion paths instead of one collapsed funnel.
+                /register, /sponsor, /donate are the entry points; /registration
+                is still reachable as a full catalog (no breaking change). */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -111,14 +123,40 @@ const Hero = () => {
               className="mt-10 flex flex-wrap items-center gap-4"
             >
               <Button asChild variant="gold" size="lg">
-                <Link href="/registration">
-                  Register / Sponsor <ArrowRight className="h-4 w-4" />
+                <Link href="/register">
+                  Register to Play <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
+              <Button asChild variant="primary" size="lg">
+                <Link href="/sponsor">Become a Sponsor</Link>
+              </Button>
               <Button asChild variant="ghost" size="lg">
-                <Link href="/contact">Contact Us</Link>
+                <Link href="/donate">
+                  <HandHeart className="h-4 w-4" /> Donate
+                </Link>
               </Button>
             </motion.div>
+
+            {/* Phone line — high-intent visitors call before committing.
+                Match existing helper/muted style; do not introduce a new
+                font or color token. */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.6, ease: EASE.outSoft }}
+              className="text-mesh-600 mt-5 inline-flex items-center gap-2 text-sm"
+            >
+              <Phone className="h-3.5 w-3.5" strokeWidth={1.75} />
+              <span>
+                Questions? Call Andy at{' '}
+                <a
+                  href={`tel:${siteConfig.contactPhone.replace(/\D/g, '')}`}
+                  className="text-navy-900 font-semibold underline-offset-4 hover:underline"
+                >
+                  {siteConfig.contactPhone}
+                </a>
+              </span>
+            </motion.p>
 
             {/* Quiet bottom meta — date / venue, no stat widgets */}
             <motion.div

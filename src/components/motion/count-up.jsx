@@ -35,17 +35,33 @@ const easeOut = (t) => 1 - Math.pow(1 - t, 3)
 
 const CountUp = ({ value, duration = 1.6, delay = 0, decimals = 0, className = '' }) => {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.4 })
+  /* `amount: 0.2` was `0.4` — the old threshold required 40 % of the
+   * card to enter the viewport. On small phones one card can fill more
+   * than 250 % of the visible area, so 0.4 never triggered and the
+   * counter sat at 0 forever (the "$0K / 0th" bug Operation 1776 flagged). */
+  const inView = useInView(ref, { once: true, amount: 0.2 })
   const { prefix, unit, to } = parseDisplayValue(value)
-  const [display, setDisplay] = useState(`${prefix}${formatNumber(0, decimals)}${unit}`)
+  /* Initialize to the FINAL value so SSR + first paint show real numbers.
+   * Worst case (observer never fires) the user just sees the final value
+   * — never the broken "0" state. The animation still plays on first
+   * in-view; we briefly reset to 0 right before kicking off the tick so
+   * the visible animation still goes 0 → final. */
+  const finalDisplay = `${prefix}${formatNumber(to, decimals)}${unit}`
+  const [display, setDisplay] = useState(finalDisplay)
+  const animatedRef = useRef(false)
 
   useEffect(() => {
-    if (!inView) return
+    if (!inView || animatedRef.current) return
+    animatedRef.current = true
 
     let rafId
     let cancelled = false
     const startDelay = delay * 1000
     const totalMs = duration * 1000
+
+    /* Reset to 0 immediately so the count-up animation is visible — the
+     * initial-state final value is only the no-animation fallback. */
+    setDisplay(`${prefix}${formatNumber(0, decimals)}${unit}`)
 
     const startTimer = setTimeout(() => {
       if (cancelled) return
@@ -61,7 +77,7 @@ const CountUp = ({ value, duration = 1.6, delay = 0, decimals = 0, className = '
         if (t < 1) {
           rafId = requestAnimationFrame(tick)
         } else {
-          setDisplay(`${prefix}${formatNumber(to, decimals)}${unit}`)
+          setDisplay(finalDisplay)
         }
       }
       rafId = requestAnimationFrame(tick)
@@ -72,7 +88,7 @@ const CountUp = ({ value, duration = 1.6, delay = 0, decimals = 0, className = '
       clearTimeout(startTimer)
       if (rafId) cancelAnimationFrame(rafId)
     }
-  }, [inView, to, prefix, unit, duration, delay, decimals])
+  }, [inView, to, prefix, unit, duration, delay, decimals, finalDisplay])
 
   return (
     <span

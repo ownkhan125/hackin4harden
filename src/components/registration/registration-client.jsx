@@ -34,7 +34,7 @@ import Badge from '@/components/ui/badge'
 import Button from '@/components/ui/button'
 import { Checkbox, Field, Input, Textarea } from '@/components/ui/form-field'
 import SectionHeader from '@/components/ui/section-header'
-import SmsConsent from '@/components/ui/sms-consent'
+import { SmsConsentInline, SmsConsentPromotional } from '@/components/ui/sms-consent'
 
 import { siteConfig } from '@/constants/site'
 
@@ -219,10 +219,24 @@ const TierSection = ({ category, tiers, selectedId, onSelect, bgClass }) => {
   )
 }
 
-const RegistrationClient = ({ groupedTiers, allTiers }) => {
+const RegistrationClient = ({ groupedTiers, allTiers, initialTierId }) => {
   const defaultTier =
-    allTiers.find((t) => t.featured)?.id ?? allTiers[0]?.id ?? ''
+    initialTierId ?? allTiers.find((t) => t.featured)?.id ?? allTiers[0]?.id ?? ''
   const [tier, setTier] = useState(defaultTier)
+
+  /* If the page was opened with a deep-link (?tier=…), scroll the form
+   * into view so visitors don't have to find it themselves. The hash
+   * already scrolls them to the right section; this nudges them past
+   * the tier grid once. */
+  useEffect(() => {
+    if (!initialTierId) return
+    const t = setTimeout(() => {
+      document
+        .getElementById('register-form')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 600)
+    return () => clearTimeout(t)
+  }, [initialTierId])
   const [activePlayer, setActivePlayer] = useState(0)
   const [players, setPlayers] = useState([
     { ...EMPTY_PLAYER },
@@ -521,7 +535,7 @@ const RegistrationClient = ({ groupedTiers, allTiers }) => {
                 <SponsorBlock sponsor={sponsor} updateSponsor={updateSponsor} />
               ) : null}
 
-              <SmsConsent idPrefix="reg" />
+              <SmsConsentPromotional idPrefix="reg" />
 
               <div className="border-cream-200 bg-cream-50 space-y-3 rounded-lg border p-5">
                 <Checkbox
@@ -669,6 +683,11 @@ const PurchaserBlock = ({ category, purchaser, updatePurchaser, isIndividualGolf
             onChange={(e) => updatePurchaser('phone', e.target.value)}
             required={isIndividualGolfer}
           />
+          {/* Inline transactional SMS consent — placed adjacent to the
+              phone field so it reads as part of the contact section, not
+              a standalone legal checkbox. SOP-required full compliance
+              copy is preserved inside the component. */}
+          <SmsConsentInline idPrefix="reg" />
         </Field>
       </div>
       <Field id="reg-org" label={labels.org}>
@@ -922,6 +941,10 @@ const FoursomePanel = ({ players, activePlayer, setActivePlayer, updatePlayer })
                   onChange={(e) => updatePlayer(index, 'phone', e.target.value)}
                   required
                 />
+                {/* Inline transactional SMS consent — captain (Player 1)
+                    only. The other players' phones are for event-day staff
+                    use; we don't text them campaign-level confirmations. */}
+                {isLead ? <SmsConsentInline idPrefix="reg" /> : null}
               </Field>
             </div>
 
