@@ -71,7 +71,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.1, ease: EASE.outSoft }}
-              className="font-display text-navy-900 mt-8 text-[44px] leading-[1.04] font-semibold tracking-[-0.025em] sm:text-[60px] lg:text-[72px]"
+              className="font-display text-navy-900 mt-8 text-[44px] leading-[1.04] font-semibold tracking-[-0.025em] text-balance sm:text-[60px] lg:text-[72px]"
             >
               Hackin&apos;
               <br />
@@ -159,30 +159,37 @@ const Hero = () => {
               </span>
             </motion.p>
 
-            {/* Quiet bottom meta — date / venue, no stat widgets */}
+            {/* Quiet bottom meta — countdown · shotgun · venue, all on
+                a single row at desktop. The horizontal gap shrinks on
+                medium screens so the venue link doesn't wrap to its
+                own line as it was doing before. */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.9, delay: 0.62, ease: EASE.outSoft }}
-              className="border-navy-900/10 text-mesh-600 mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t pt-6 text-xs"
+              className="border-navy-900/10 text-mesh-600 mt-10 flex flex-wrap items-center gap-x-5 gap-y-3 border-t pt-6 text-xs lg:flex-nowrap lg:gap-x-6"
             >
               <CountdownPill />
-              <div className="flex items-center gap-2">
+              <div className="flex flex-none items-center gap-2">
                 <CalendarRange className="text-gold-500 h-3.5 w-3.5" strokeWidth={1.75} />
-                <span className="font-mono tracking-[0.2em] uppercase">7:30 AM Shotgun Start</span>
+                <span className="font-mono whitespace-nowrap tracking-[0.2em] uppercase">
+                  7:30 AM Shotgun Start
+                </span>
               </div>
               <a
                 href={siteConfig.event.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Open The Legacy Golf Club on Google Maps"
-                className="hover:text-navy-900 group inline-flex items-center gap-2 transition-colors"
+                className="hover:text-navy-900 group inline-flex flex-none items-center gap-2 transition-colors"
               >
                 <MapPin
                   className="h-3.5 w-3.5 text-green-600 transition-colors group-hover:text-green-700"
                   strokeWidth={1.75}
                 />
-                <span className="font-mono tracking-[0.2em] uppercase">The Legacy Golf Club</span>
+                <span className="font-mono whitespace-nowrap tracking-[0.2em] uppercase">
+                  The Legacy Golf Club
+                </span>
               </a>
             </motion.div>
           </div>
@@ -266,15 +273,6 @@ const Hero = () => {
                 </div>
               </div>
 
-              {/* Caption tag below the frame */}
-              <figcaption className="border-gold-500/70 mt-5 flex items-center justify-between border-l-2 pl-4">
-                <span className="text-mesh-600 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
-                  Benefiting · The First Tee of Phoenix
-                </span>
-                <span className="text-gold-600 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
-                  Since 2015
-                </span>
-              </figcaption>
             </figure>
           </motion.div>
         </div>

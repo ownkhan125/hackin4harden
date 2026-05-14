@@ -28,8 +28,11 @@ const Founders = () => {
         lead="The tournament is held in honor of Joshua Cole Harden. The Legacy Golf Club has hosted this event all eleven years."
       />
 
+      {/* 2-column grid once Matt was dropped; the cards now fill the
+          full section width on desktop. Mobile keeps the horizontal
+          snap carousel for the same affordance. */}
       <Stagger
-        className="no-scrollbar mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 scroll-px-5 sm:mt-14 sm:mx-0 sm:grid sm:snap-none sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 sm:scroll-px-0 md:grid-cols-3"
+        className="no-scrollbar mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 scroll-px-5 sm:mt-14 sm:mx-0 sm:grid sm:snap-none sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 sm:scroll-px-0 md:grid-cols-2"
         delay={0.08}
       >
         {FOUNDERS?.map((person) => (

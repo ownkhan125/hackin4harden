@@ -140,6 +140,11 @@ export const ECOSYSTEM = [
     span: 'lg:col-span-2',
     accent: 'gold',
     href: '/registration?tier=individual#tickets',
+    /* Flagged as a primary CTA — visually elevated above the dark info
+     * cards so the two action paths (Register / Donate) read like
+     * buttons. */
+    cta: true,
+    ctaLabel: 'Register to Play',
   },
   {
     icon: HandHeart,
@@ -150,6 +155,8 @@ export const ECOSYSTEM = [
     span: 'lg:col-span-2',
     accent: 'green',
     href: '/registration#donations',
+    cta: true,
+    ctaLabel: 'Donate',
   },
 ]
 

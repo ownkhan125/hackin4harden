@@ -66,7 +66,7 @@ const PageHero = ({ eyebrow, title, lead, align = 'left', children, className = 
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, delay: 0.1, ease: EASE.outSoft }}
-            className="font-display text-cream-50 mt-6 text-[40px] leading-[1.05] font-semibold tracking-[-0.025em] sm:text-[52px] lg:text-[64px]"
+            className="font-display text-cream-50 mt-6 text-[40px] leading-[1.05] font-semibold tracking-[-0.025em] text-balance sm:text-[52px] lg:text-[64px]"
           >
             {title}
           </motion.h1>

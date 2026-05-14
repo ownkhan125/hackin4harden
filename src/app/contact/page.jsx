@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Check, Mail, MapPin, Phone, Send, User } from 'lucide-react'
 
+import { Check, Loader2, Mail, MapPin, Phone, Send, User } from 'lucide-react'
 
 import FadeIn from '@/components/motion/fade-in'
 import MotionCard from '@/components/motion/motion-card'
@@ -13,13 +13,13 @@ import Section from '@/components/sections/section'
 import Button from '@/components/ui/button'
 import { Field, Input, Textarea } from '@/components/ui/form-field'
 import SectionHeader from '@/components/ui/section-header'
-import SmsConsent from '@/components/ui/sms-consent'
+import { SmsConsentInline, SmsConsentPromotional } from '@/components/ui/sms-consent'
+
+import { formatPhoneInput } from '@/lib/phone'
 
 import { siteConfig } from '@/constants/site'
 
-/* Contact information lifted verbatim from source contact-us page.
- * No descriptive notes — source provides only names, roles, and numbers.
- */
+/* Andy-only contact card now that Matt has been removed from the site. */
 const CONTACTS = [
   {
     icon: User,
@@ -31,11 +31,53 @@ const CONTACTS = [
 ]
 
 const ContactPage = () => {
-  const [submitted, setSubmitted] = useState(false)
+  const [form, setForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: '',
+  })
+  /* Controlled SMS consent state so the Yes/No can ship to the A2P
+   * compliance webhook alongside the primary contact POST. Matches
+   * the registration form's pattern. */
+  const [smsInformational, setSmsInformational] = useState(false)
+  const [smsPromotional, setSmsPromotional] = useState(false)
 
-  const onSubmit = (e) => {
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+
+  const update = (k) => (e) => setForm((prev) => ({ ...prev, [k]: e.target.value }))
+
+  const onSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
+    setSubmitError('')
+    if (submitting) return
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: form.phone,
+          message: form.message,
+          sms_updates: smsInformational ? 'Yes' : 'No',
+          sms_promo: smsPromotional ? 'Yes' : 'No',
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || 'Submission failed. Please try again.')
+      }
+      setSubmitted(true)
+    } catch (err) {
+      setSubmitError(err.message)
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -50,7 +92,7 @@ const ContactPage = () => {
         lead="Reach Andy Harden directly for any question about the tournament, sponsorships, or the Joshua Cole Harden Scholarship Fund."
       />
 
-      {/* Direct contact cards */}
+      {/* Direct contact card */}
       <Section className="bg-cream-50">
         <SectionHeader
           eyebrow="Direct contact"
@@ -165,7 +207,9 @@ const ContactPage = () => {
                 <h3 className="font-display text-navy-900 mt-6 text-2xl font-semibold tracking-tight">
                   Message sent.
                 </h3>
-                <p className="text-mesh-700 mt-3">Thank you for reaching out.</p>
+                <p className="text-mesh-700 mt-3">
+                  Thank you for reaching out — Andy will be in touch shortly.
+                </p>
               </div>
             ) : (
               <form
@@ -179,6 +223,8 @@ const ContactPage = () => {
                       name="firstName"
                       type="text"
                       autoComplete="given-name"
+                      value={form.firstName}
+                      onChange={update('firstName')}
                       required
                     />
                   </Field>
@@ -188,6 +234,8 @@ const ContactPage = () => {
                       name="lastName"
                       type="text"
                       autoComplete="family-name"
+                      value={form.lastName}
+                      onChange={update('lastName')}
                       required
                     />
                   </Field>
@@ -195,7 +243,15 @@ const ContactPage = () => {
 
                 <div className="grid gap-5 sm:grid-cols-2">
                   <Field id="c-email" label="Email" required>
-                    <Input id="c-email" name="email" type="email" autoComplete="email" required />
+                    <Input
+                      id="c-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      value={form.email}
+                      onChange={update('email')}
+                      required
+                    />
                   </Field>
                   <Field id="c-phone" label="Phone" hint="Optional">
                     <Input
@@ -203,7 +259,11 @@ const ContactPage = () => {
                       name="phone"
                       type="tel"
                       autoComplete="tel"
-                      placeholder="(480) 555-0123"
+                      placeholder="+1 (xxx) xxx-xxxx"
+                      value={form.phone}
+                      onChange={(e) =>
+                        setForm((prev) => ({ ...prev, phone: formatPhoneInput(e.target.value) }))
+                      }
                     />
                   </Field>
                 </div>
@@ -214,18 +274,43 @@ const ContactPage = () => {
                     name="message"
                     rows={6}
                     placeholder="Your message"
+                    value={form.message}
+                    onChange={update('message')}
                     required
                   />
                 </Field>
 
-                {/* SMS consent — two separate, optional, NOT pre-checked checkboxes,
-                    placed at the bottom of the form, above the submit button.
-                    Required by Operation 1776 A2P 10DLC SOP items 7, 8, 9, 11. */}
-                <SmsConsent idPrefix="c" />
+                {/* SMS consent — both controlled so the Yes/No state
+                    ships to the A2P compliance webhook with the rest
+                    of the contact payload. */}
+                <SmsConsentInline
+                  idPrefix="c"
+                  checked={smsInformational}
+                  onChange={(e) => setSmsInformational(e.target.checked)}
+                />
+                <SmsConsentPromotional
+                  idPrefix="c"
+                  checked={smsPromotional}
+                  onChange={(e) => setSmsPromotional(e.target.checked)}
+                />
+
+                {submitError ? (
+                  <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {submitError}
+                  </p>
+                ) : null}
 
                 <div className="border-cream-200 flex flex-wrap items-center gap-4 border-t pt-6">
-                  <Button type="submit" variant="primary" size="lg">
-                    Send message <Send className="h-4 w-4" />
+                  <Button type="submit" variant="primary" size="lg" disabled={submitting}>
+                    {submitting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" /> Sending…
+                      </>
+                    ) : (
+                      <>
+                        Send message <Send className="h-4 w-4" />
+                      </>
+                    )}
                   </Button>
                   <p className="text-mesh-500 text-xs">
                     By submitting you agree to the{' '}

@@ -1,15 +1,15 @@
 import Link from 'next/link'
 
-import { ArrowRight, ShieldCheck } from 'lucide-react'
+import { ArrowRight, HandHeart, Mail, ShieldCheck } from 'lucide-react'
 
 import FadeIn from '@/components/motion/fade-in'
-import Stagger from '@/components/motion/stagger'
-import StaggerItem from '@/components/motion/stagger-item'
 import Button from '@/components/ui/button'
 import Container from '@/components/ui/container'
 
-import { PROOF_CHIPS } from '@/constants/homepage'
-
+/* Final CTA — mirrors the hero's three primary paths plus a Contact
+ * option, so the bottom of the page offers the same decision the top
+ * does. Body copy + meta-chip row removed per client review; the
+ * heading carries the date so we don't repeat it in pill form. */
 const FinalCta = () => {
   return (
     <section className="bg-navy-950 relative overflow-hidden">
@@ -31,63 +31,30 @@ const FinalCta = () => {
             Join us in honoring Josh
           </span>
 
-          <h2 className="font-display text-display-xl text-cream-50 sm:text-display-2xl mt-6 font-semibold tracking-[-0.025em]">
+          <h2 className="font-display text-display-xl text-cream-50 sm:text-display-2xl mt-6 font-semibold tracking-[-0.025em] text-balance">
             Saturday, June 6, 2026. <span className="text-gold-400">7:30 AM shotgun.</span>
           </h2>
 
-          <p className="text-cream-100/72 mx-auto mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl">
-            On behalf of Josh, the Harden family, The First Tee of Phoenix and The Legacy Golf Club,
-            it is our honor to welcome each of you to the 2026 11th Annual Hackin&apos; for Harden.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
             <Button asChild variant="gold" size="lg">
-              <Link href="/registration">
-                Register your foursome <ArrowRight className="h-4 w-4" />
+              <Link href="/register">
+                Register to Play <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild variant="primary" size="lg">
+              <Link href="/sponsor">Become a Sponsor</Link>
+            </Button>
+            <Button asChild variant="ghostLight" size="lg">
+              <Link href="/donate">
+                <HandHeart className="h-4 w-4" /> Donate
               </Link>
             </Button>
             <Button asChild variant="ghostLight" size="lg">
-              <Link href="/contact">Contact Us</Link>
+              <Link href="/contact">
+                <Mail className="h-4 w-4" /> Contact
+              </Link>
             </Button>
           </div>
-
-          <Stagger className="mt-12 flex flex-wrap items-center justify-center gap-3" delay={0.06}>
-            {PROOF_CHIPS?.map((chip) => {
-              const Icon = chip.icon
-              const baseChip =
-                'border-cream-50/15 bg-cream-50/5 inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur'
-
-              const inner = (
-                <>
-                  <Icon
-                    className="h-3.5 w-3.5 text-green-300 transition-colors group-hover:text-green-200"
-                    strokeWidth={1.5}
-                  />
-                  <span className="text-cream-100/85 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
-                    {chip.label}
-                  </span>
-                </>
-              )
-
-              return (
-                <StaggerItem key={chip.label}>
-                  {chip.href ? (
-                    <a
-                      href={chip.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Open ${chip.label} on Google Maps`}
-                      className={`${baseChip} hover:border-gold-400/60 hover:bg-cream-50/10 group transition-colors`}
-                    >
-                      {inner}
-                    </a>
-                  ) : (
-                    <span className={baseChip}>{inner}</span>
-                  )}
-                </StaggerItem>
-              )
-            })}
-          </Stagger>
 
           <div className="text-cream-100/45 mt-10 inline-flex items-center gap-2 text-xs">
             <ShieldCheck className="h-3.5 w-3.5 text-green-300" />

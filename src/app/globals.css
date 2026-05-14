@@ -103,8 +103,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Translucent gold selection — the previous solid gold-300 was opaque
+ * enough that a multi-line selection visually obscured the lines
+ * beneath it (Operation 1776 sponsor-page review). The translucent
+ * fill keeps the warm gold tint but lets underlying text stay
+ * readable through the selection rectangle. */
 ::selection {
-  background: var(--color-gold-300);
+  background: color-mix(in srgb, var(--color-gold-300) 45%, transparent);
   color: var(--color-navy-900);
 }
 

@@ -63,7 +63,9 @@ const SectionHeader = ({
       <motion.h2
         variants={fadeUpTitle}
         className={cn(
-          'font-display text-display-lg sm:text-display-xl mt-6 font-semibold tracking-[-0.02em]',
+          /* text-balance keeps the last 1-2 words tucked with the rest
+           * of the line rather than dropping a single-word widow. */
+          'font-display text-display-lg sm:text-display-xl mt-6 font-semibold tracking-[-0.02em] text-balance',
           invert ? 'text-cream-50' : 'text-navy-900',
         )}
       >
