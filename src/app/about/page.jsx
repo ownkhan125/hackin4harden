@@ -50,7 +50,7 @@ const About = () => {
             In honor of <span className="text-gold-400">Joshua Cole</span> Harden.
           </>
         }
-        lead="As most of you know, April will mark the 11 year anniversary of Josh's untimely death from cancer. Most are also aware that Josh contracted an aggressive form of cancer in early 2015 and was gone in 75 days from the time of the diagnosis."
+        lead="As most of you know, April 2026 marks the 11 year anniversary of Josh's untimely death from cancer. Most are also aware that Josh contracted an aggressive form of cancer in early 2015 and was gone in 75 days from the time of the diagnosis."
       >
         <div className="flex flex-wrap items-center gap-4">
           <Button asChild variant="gold" size="lg">
@@ -82,7 +82,7 @@ const About = () => {
           <FadeIn className="lg:col-span-7">
             <article className="text-mesh-700 space-y-6 text-lg leading-[1.75]">
               <p>
-                As most of you know, April will mark the 11-year anniversary of Josh&apos;s untimely
+                As most of you know, April 2026 marks the 11-year anniversary of Josh&apos;s untimely
                 death from cancer. Most are also aware that he contracted an aggressive form of
                 cancer in early 2015 and was gone in 75 days from the time of the diagnosis. He was
                 32 — and just taking off in his life.

@@ -128,7 +128,7 @@ const SponsorPage = () => {
             <span className="text-gold-400">11 years</span>.
           </>
         }
-        lead="Sponsorship of the 11th Annual Hackin' for Harden directly funds the Joshua Cole Harden Scholarship Fund and supports The First Tee of Phoenix."
+        lead="Your sponsorship directly supports the Joshua Cole Harden Scholarship Fund and The First Tee of Phoenix while giving your business meaningful visibility throughout tournament day."
       />
 
       <Section id="tiers" className="bg-cream-50">

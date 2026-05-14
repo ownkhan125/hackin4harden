@@ -26,7 +26,7 @@ const TICKETS = [
     icon: Users,
     name: 'Foursome',
     price: '$600',
-    note: '$150/player · save vs. individual',
+    note: '$150/player · 4-player team entry',
     featured: true,
     accent: 'green',
     includes: [
