@@ -118,7 +118,7 @@ const Location = () => {
                 6808 S 32nd St · 85042
               </h4>
               <p className="text-cream-100/65 mt-3 max-w-[34ch] text-sm leading-relaxed">
-                Course: Legacy. Hosted by The Legacy Golf Course every year of the tournament.
+                Course: Legacy. Hosted by The Legacy Golf Club every year of the tournament.
               </p>
             </div>
 

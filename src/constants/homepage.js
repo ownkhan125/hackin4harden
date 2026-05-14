@@ -32,7 +32,7 @@ export const HERO_METRICS = [
 
 // Source: home.txt — partners and beneficiaries explicitly named.
 export const TRUST_LOGOS = [
-  { name: 'The Legacy Golf Course' },
+  { name: 'The Legacy Golf Club' },
   { name: 'The First Tee of Phoenix' },
   { name: 'Joshua Cole Harden Scholarship Fund' },
   { name: 'Phoenix, AZ' },

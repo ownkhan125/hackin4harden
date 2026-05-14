@@ -19,7 +19,7 @@ const Testimonials = () => {
             About <span className="text-green-500">Josh</span>.
           </>
         }
-        lead="Three passages from the about page — Josh's love of the First Tee, his work as a TPC caddy, and the venue that has hosted this tournament every one of its eleven years."
+        lead="Josh loved golf, the First Tee, and the community that grew around the game. These stories share why this tournament continues in his honor."
       />
 
       <Stagger className="no-scrollbar mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 scroll-px-5 sm:mt-14 sm:mx-0 sm:grid sm:snap-none sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 sm:scroll-px-0 md:grid-cols-2 lg:grid-cols-3">

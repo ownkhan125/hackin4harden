@@ -189,7 +189,7 @@ const About = () => {
           eyebrow="In partnership with"
           title={
             <>
-              The Legacy Golf Course and{' '}
+              The Legacy Golf Club and{' '}
               <span className="text-green-500">The First Tee of Phoenix</span>.
             </>
           }

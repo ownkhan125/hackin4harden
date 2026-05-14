@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import MotionCard from '@/components/motion/motion-card'
 import Stagger from '@/components/motion/stagger'
 import StaggerItem from '@/components/motion/stagger-item'
@@ -28,26 +30,32 @@ const WhyWeWin = () => {
               key={item.title}
               className="w-[82%] flex-none snap-start sm:w-auto sm:flex-initial"
             >
-              <MotionCard
-                glow="green"
-                className="border-cream-200 h-full overflow-hidden rounded-xl border bg-white p-8"
+              <Link
+                href="/donate"
+                aria-label={`${item.title} — donate`}
+                className="block h-full rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
               >
-                <div className="absolute inset-x-8 top-0 h-[3px] bg-green-500" aria-hidden />
+                <MotionCard
+                  glow="green"
+                  className="border-cream-200 h-full cursor-pointer overflow-hidden rounded-xl border bg-white p-8"
+                >
+                  <div className="absolute inset-x-8 top-0 h-[3px] bg-green-500" aria-hidden />
 
-                <div className="flex items-start justify-between gap-4">
-                  <div className="border-cream-200 bg-cream-50 flex h-12 w-12 items-center justify-center rounded-lg border text-green-500 transition-colors duration-300 group-hover/card:border-green-500/40 group-hover/card:bg-green-500/[0.06]">
-                    <Icon className="h-5 w-5" strokeWidth={1.5} />
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="border-cream-200 bg-cream-50 flex h-12 w-12 items-center justify-center rounded-lg border text-green-500 transition-colors duration-300 group-hover/card:border-green-500/40 group-hover/card:bg-green-500/[0.06]">
+                      <Icon className="h-5 w-5" strokeWidth={1.5} />
+                    </div>
+                    <span className="text-mesh-400 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
+                      0{idx + 1}
+                    </span>
                   </div>
-                  <span className="text-mesh-400 font-mono text-[11px] font-semibold tracking-[0.22em] uppercase">
-                    0{idx + 1}
-                  </span>
-                </div>
 
-                <h3 className="font-display text-navy-900 mt-7 text-2xl font-semibold tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="text-mesh-600 mt-3 leading-relaxed">{item.description}</p>
-              </MotionCard>
+                  <h3 className="font-display text-navy-900 mt-7 text-2xl font-semibold tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-mesh-600 mt-3 leading-relaxed">{item.description}</p>
+                </MotionCard>
+              </Link>
             </StaggerItem>
           )
         })}

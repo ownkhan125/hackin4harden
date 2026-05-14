@@ -31,7 +31,7 @@ const RegistrationPage = async ({ searchParams }) => {
             <span className="text-gold-400">2026</span> Registration Now Open!
           </>
         }
-        lead="Welcome to the 11th Annual Hackin' for Harden memorial golf tournament in honor of Joshua Cole Harden. In partnership with The Legacy Golf Course and The First Tee of Phoenix, registration for this year's tournament is now OPEN."
+        lead="Welcome to the 11th Annual Hackin' for Harden memorial golf tournament in honor of Joshua Cole Harden. In partnership with The Legacy Golf Club and The First Tee of Phoenix, registration for this year's tournament is now OPEN."
       >
         <div className="text-cream-100/70 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
           <span className="inline-flex items-center gap-2">

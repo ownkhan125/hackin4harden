@@ -726,66 +726,101 @@ const PurchaserBlock = ({ category, purchaser, updatePurchaser, isIndividualGolf
   )
 }
 
-const SponsorBlock = ({ sponsor, updateSponsor }) => (
-  <div className="space-y-4">
-    <div className="border-gold-300/60 bg-gold-50/60 flex items-center gap-4 rounded-xl border p-4">
-      <div className="bg-gold-500 text-cream-50 flex h-10 w-10 flex-none items-center justify-center rounded-lg shadow-[0_8px_18px_-10px_rgba(180,140,40,0.55)]">
-        <Award className="h-4 w-4" />
+/* Human-readable message for the native `type="url"` typeMismatch.
+ * The browser's own bubble ("Please enter a URL.") flashes by and
+ * doesn't explain that the https:// scheme is the missing piece —
+ * sponsors were getting bounced back to the field with no idea why. */
+const URL_HINT = 'Enter a full link including https:// — for example, https://example.com'
+
+const SponsorBlock = ({ sponsor, updateSponsor }) => {
+  /* Inline error per URL field. Populated from the input's native
+   * `onInvalid` event (fires when the form tries to submit with an
+   * invalid value) and cleared as soon as the field changes. */
+  const [urlErrors, setUrlErrors] = useState({ website: '', logoUrl: '' })
+
+  /* Suppress the native bubble and surface a persistent inline message
+   * instead. preventDefault keeps the browser from popping its own
+   * tooltip; the form still won't submit because the field is invalid. */
+  const handleUrlInvalid = (field) => (e) => {
+    e.preventDefault()
+    setUrlErrors((prev) => ({ ...prev, [field]: URL_HINT }))
+  }
+
+  const handleUrlChange = (field) => (e) => {
+    if (urlErrors[field]) setUrlErrors((prev) => ({ ...prev, [field]: '' }))
+    updateSponsor(field, e.target.value)
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="border-gold-300/60 bg-gold-50/60 flex items-center gap-4 rounded-xl border p-4">
+        <div className="bg-gold-500 text-cream-50 flex h-10 w-10 flex-none items-center justify-center rounded-lg shadow-[0_8px_18px_-10px_rgba(180,140,40,0.55)]">
+          <Award className="h-4 w-4" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="text-navy-900 font-display text-sm font-semibold tracking-tight">
+            Sponsor details
+          </p>
+          <p className="text-mesh-600 mt-0.5 text-xs leading-relaxed">
+            Used for on-course recognition, the program book, and our sponsor thank-you outreach.
+          </p>
+        </div>
       </div>
-      <div className="min-w-0 flex-1">
-        <p className="text-navy-900 font-display text-sm font-semibold tracking-tight">
-          Sponsor details
-        </p>
-        <p className="text-mesh-600 mt-0.5 text-xs leading-relaxed">
-          Used for on-course recognition, the program book, and our sponsor thank-you outreach.
-        </p>
-      </div>
-    </div>
-    <Field id="sponsor-company" label="Company / Sponsor name (as displayed)" required>
-      <Input
-        id="sponsor-company"
-        name="sponsorCompany"
-        type="text"
-        autoComplete="organization"
-        value={sponsor.company}
-        onChange={(e) => updateSponsor('company', e.target.value)}
-        required
-      />
-    </Field>
-    <div className="grid gap-5 sm:grid-cols-2">
-      <Field id="sponsor-website" label="Website">
+      <Field id="sponsor-company" label="Company / Sponsor name (as displayed)" required>
         <Input
-          id="sponsor-website"
-          name="sponsorWebsite"
-          type="url"
-          placeholder="https://"
-          value={sponsor.website}
-          onChange={(e) => updateSponsor('website', e.target.value)}
+          id="sponsor-company"
+          name="sponsorCompany"
+          type="text"
+          autoComplete="organization"
+          value={sponsor.company}
+          onChange={(e) => updateSponsor('company', e.target.value)}
+          required
         />
       </Field>
-      <Field id="sponsor-logo" label="Logo URL" hint="Hosted logo link — we'll follow up if missing.">
-        <Input
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field id="sponsor-website" label="Website" error={urlErrors.website}>
+          <Input
+            id="sponsor-website"
+            name="sponsorWebsite"
+            type="url"
+            placeholder="https://"
+            value={sponsor.website}
+            onChange={handleUrlChange('website')}
+            onInvalid={handleUrlInvalid('website')}
+            aria-invalid={Boolean(urlErrors.website)}
+          />
+        </Field>
+        <Field
           id="sponsor-logo"
-          name="sponsorLogoUrl"
-          type="url"
-          placeholder="https://"
-          value={sponsor.logoUrl}
-          onChange={(e) => updateSponsor('logoUrl', e.target.value)}
+          label="Logo URL"
+          hint="Hosted logo link — we'll follow up if missing."
+          error={urlErrors.logoUrl}
+        >
+          <Input
+            id="sponsor-logo"
+            name="sponsorLogoUrl"
+            type="url"
+            placeholder="https://"
+            value={sponsor.logoUrl}
+            onChange={handleUrlChange('logoUrl')}
+            onInvalid={handleUrlInvalid('logoUrl')}
+            aria-invalid={Boolean(urlErrors.logoUrl)}
+          />
+        </Field>
+      </div>
+      <Field id="sponsor-notes" label="Sponsor notes">
+        <Textarea
+          id="sponsor-notes"
+          name="sponsorNotes"
+          rows={3}
+          value={sponsor.notes}
+          onChange={(e) => updateSponsor('notes', e.target.value)}
+          placeholder="Preferred listing name, slogan, special requests."
         />
       </Field>
     </div>
-    <Field id="sponsor-notes" label="Sponsor notes">
-      <Textarea
-        id="sponsor-notes"
-        name="sponsorNotes"
-        rows={3}
-        value={sponsor.notes}
-        onChange={(e) => updateSponsor('notes', e.target.value)}
-        placeholder="Preferred listing name, slogan, special requests."
-      />
-    </Field>
-  </div>
-)
+  )
+}
 
 const FoursomePanel = ({ players, activePlayer, setActivePlayer, updatePlayer }) => (
   <div className="space-y-4">

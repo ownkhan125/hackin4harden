@@ -95,12 +95,12 @@ const SiteHeader = () => {
         <Container className="flex h-16 items-center justify-between gap-6 sm:h-20">
           {/* Brand — logo only */}
           <Link href="/" aria-label={siteConfig.name} className="group flex flex-none items-center">
-            <span className="relative flex h-11 w-11 items-center justify-center transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] sm:h-12 sm:w-12">
+            <span className="relative flex h-[3.25rem] w-[3.25rem] items-center justify-center transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] sm:h-14 sm:w-14">
               <Image
                 src="/logo.webp"
                 alt={`${siteConfig.name} logo`}
-                width={56}
-                height={56}
+                width={64}
+                height={64}
                 priority
                 className="h-full w-full object-contain"
               />

@@ -22,7 +22,7 @@ const Founders = () => {
         title={
           <>
             Joshua Cole Harden, the Harden family, and{' '}
-            <span className="text-gold-400">The Legacy Golf Course.</span>
+            <span className="text-gold-400">The Legacy Golf Club.</span>
           </>
         }
         lead="The tournament is held in honor of Joshua Cole Harden. The Legacy Golf Club has hosted this event all eleven years."

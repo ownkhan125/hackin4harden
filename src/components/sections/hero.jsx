@@ -95,8 +95,9 @@ const Hero = () => {
               transition={{ duration: 0.85, delay: 0.26, ease: EASE.outSoft }}
               className="text-mesh-700 mt-5 max-w-2xl text-lg leading-[1.7]"
             >
-              Since 2015, we&apos;ve gathered to honor Josh and grow the Scholarship Fund in his
-              name — benefiting kids at The First Tee of Phoenix. Join us June 6 for our 11th year.
+              Since 2015, we&apos;ve gathered to honor Josh and support the scholarship fund in his
+              name, benefiting kids at The First Tee of Phoenix. Join us on June 6 for our 11th year
+              tournament.
             </motion.p>
 
             {/* Source: home.txt — partners explicitly named */}
@@ -109,7 +110,7 @@ const Hero = () => {
               <Heart className="text-gold-500 mt-0.5 h-4 w-4 flex-none" strokeWidth={1.75} />
               <span>
                 In partnership with{' '}
-                <span className="text-navy-900 font-semibold">The Legacy Golf Course</span> and{' '}
+                <span className="text-navy-900 font-semibold">The Legacy Golf Club</span> and{' '}
                 <span className="text-navy-900 font-semibold">The First Tee of Phoenix</span>.
               </span>
             </motion.p>
@@ -129,12 +130,12 @@ const Hero = () => {
                 </Link>
               </Button>
               <Button asChild variant="primary" size="lg">
-                <Link href="/sponsor">Become a Sponsor</Link>
-              </Button>
-              <Button asChild variant="ghost" size="lg">
                 <Link href="/donate">
                   <HandHeart className="h-4 w-4" /> Donate
                 </Link>
+              </Button>
+              <Button asChild variant="ghost" size="lg">
+                <Link href="/sponsor">Become a Sponsor</Link>
               </Button>
             </motion.div>
 
@@ -225,9 +226,11 @@ const Hero = () => {
                   aria-hidden
                 />
 
-                {/* Centered emblem — placeholder image */}
-                <div className="relative flex h-full w-full flex-col items-center justify-center px-8 text-center">
-                  <div className="relative h-32 w-32 sm:h-40 sm:w-40">
+                {/* Centered emblem — placeholder image. Vertical padding
+                    keeps the centered column from riding up under the
+                    "Registration Open" badge on small screens. */}
+                <div className="relative flex h-full w-full flex-col items-center justify-start px-8 pt-[60px] pb-14 text-center sm:justify-center sm:pt-10 sm:pb-10">
+                  <div className="relative h-20 w-20 shrink-0 sm:h-40 sm:w-40">
                     <Image
                       src="/logo.webp"
                       alt="Hackin' for Harden Memorial Golf Tournament"
@@ -247,7 +250,7 @@ const Hero = () => {
                     Age 32 · Lost in 2015
                   </p>
 
-                  <div className="bg-gold-400/70 mt-8 h-px w-16" aria-hidden />
+                  <div className="bg-gold-400/70 mt-8 h-px w-16 shrink-0" aria-hidden />
 
                   <p className="text-mesh-600 mt-6 max-w-[28ch] text-[13px] leading-relaxed">
                     Benefiting the Joshua Cole Harden Scholarship Fund and The First Tee of Phoenix.

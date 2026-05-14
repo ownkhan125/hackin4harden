@@ -17,7 +17,7 @@ const TrustStrip = () => {
       <Container className="py-14 sm:py-16 lg:py-20">
         <FadeIn>
           <p className="text-mesh-500 text-center font-mono text-[11px] font-semibold tracking-[0.26em] uppercase sm:text-[12px]">
-            In partnership with The Legacy Golf Course and The First Tee of Phoenix
+            In partnership with The Legacy Golf Club and The First Tee of Phoenix
           </p>
         </FadeIn>
 
