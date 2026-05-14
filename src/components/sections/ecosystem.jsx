@@ -1,10 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+import { AnimatePresence, motion } from 'motion/react'
+import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 
 import MotionCard from '@/components/motion/motion-card'
-import Stagger from '@/components/motion/stagger'
-import StaggerItem from '@/components/motion/stagger-item'
 import Section from '@/components/sections/section'
 import SectionHeader from '@/components/ui/section-header'
 
@@ -15,43 +18,160 @@ const ACCENT_RULE = {
   green: 'bg-gradient-to-r from-green-500 to-transparent',
   gold: 'bg-gradient-to-r from-gold-400 to-transparent',
 }
+const ACCENT_ICON = { green: 'text-green-300', gold: 'text-gold-400' }
 
-const ACCENT_ICON = {
-  green: 'text-green-300',
-  gold: 'text-gold-400',
-}
-
-/* Shared layout — every card has the same chrome (flex column, padding,
- * border radius, transition). Only the surface colours diverge between
- * the read-only info cards and the action CTAs. */
 const baseShell =
   'flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border p-7 transition-colors'
-
-/* Dark navy surface for the four read-only sponsor info cards. */
 const infoSurface = 'border-navy-700 bg-navy-900 hover:border-navy-600'
-
-/* Light gold/green surfaces for the two CTAs (Individual Golfer +
- * Donation). These read like big buttons against the cream section
- * background so visitors can immediately tell which cards are
- * "click me to act" vs "read me to learn". */
 const ctaSurface = {
   gold: 'border-gold-400 bg-gold-50 hover:bg-gold-100 hover:border-gold-500',
   green: 'border-green-400 bg-green-50/80 hover:bg-green-100/80 hover:border-green-500',
 }
-const ctaText = {
-  gold: 'text-gold-700',
-  green: 'text-green-700',
-}
+const ctaText = { gold: 'text-gold-700', green: 'text-green-700' }
 const ctaIconBg = {
   gold: 'bg-gold-400/15 border-gold-400/40',
   green: 'bg-green-500/15 border-green-500/40',
 }
-const ctaIconColor = {
-  gold: 'text-gold-600',
-  green: 'text-green-600',
+const ctaIconColor = { gold: 'text-gold-600', green: 'text-green-600' }
+
+const AUTO_ADVANCE_MS = 2000
+
+/* Single card body — used both as the sticky Platinum slot and as the
+ * carousel's current frame. Keeps the visual rules in one place so the
+ * sticky card and the rotating cards look identical apart from their
+ * surface tone. */
+const EcosystemCard = ({ card }) => {
+  const Icon = card.icon
+  const isCta = Boolean(card.cta)
+  const accent = card.accent === 'gold' ? 'gold' : 'green'
+
+  return (
+    <MotionCard
+      glow={accent}
+      className={cn(baseShell, isCta ? ctaSurface[accent] : infoSurface)}
+    >
+      <div
+        className={cn('absolute inset-x-7 top-0 h-[3px]', ACCENT_RULE[accent])}
+        aria-hidden
+      />
+
+      <div className="flex items-start justify-between gap-4">
+        <div
+          className={cn(
+            'flex h-11 w-11 items-center justify-center rounded-lg border transition-colors duration-300',
+            isCta
+              ? ctaIconBg[accent]
+              : 'border-navy-700 bg-navy-800 group-hover/card:border-navy-600',
+          )}
+        >
+          <Icon
+            className={cn('h-5 w-5', isCta ? ctaIconColor[accent] : ACCENT_ICON[accent])}
+            strokeWidth={1.5}
+          />
+        </div>
+        {isCta ? (
+          <span
+            className={cn(
+              'inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold tracking-[0.22em] uppercase',
+              ctaText[accent],
+            )}
+          >
+            {card.ctaLabel ?? 'Choose'}
+            <ArrowRight className="h-3 w-3" />
+          </span>
+        ) : (
+          <ArrowUpRight
+            className="text-cream-100/40 group-hover/card:text-cream-50 h-4 w-4 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:translate-x-1 group-hover/card:-translate-y-1"
+            strokeWidth={1.5}
+          />
+        )}
+      </div>
+
+      <div className="mt-6 flex-1">
+        <p
+          className={cn(
+            'font-mono text-[11px] font-semibold tracking-[0.22em] uppercase',
+            isCta ? ctaText[accent] : 'text-gold-400',
+          )}
+        >
+          {card.sub}
+        </p>
+        <h3
+          className={cn(
+            'font-display mt-2 text-2xl font-semibold tracking-tight',
+            isCta ? 'text-navy-900' : 'text-cream-50',
+          )}
+        >
+          {card.title}
+        </h3>
+        <p
+          className={cn(
+            'mt-3 text-sm leading-relaxed',
+            isCta ? 'text-mesh-700' : 'text-cream-100/72',
+          )}
+        >
+          {card.description}
+        </p>
+      </div>
+    </MotionCard>
+  )
 }
 
 const Ecosystem = () => {
+  /* Split the dataset: Platinum is sticky (left column on desktop,
+   * first card on mobile), the rest rotate in the carousel slot. */
+  const platinum = ECOSYSTEM.find((c) => c.title === 'Platinum Sponsor')
+  const rotating = ECOSYSTEM.filter((c) => c !== platinum)
+
+  const [activeIdx, setActiveIdx] = useState(0)
+  /* Only the explicit play/pause button gates auto-advance. The
+   * earlier hover-pause was removed — it fought the button (mouse
+   * still on the carousel after Resume click kept it paused, which
+   * confused users). */
+  const [paused, setPaused] = useState(false)
+  /* Track scroll-direction for the slide animation. */
+  const [direction, setDirection] = useState(1)
+
+  /* Mirror the live `paused` value into a ref so the setInterval
+   * callback always reads the latest. Without this, an in-flight tick
+   * scheduled before pause was toggled would still fire — letting one
+   * more advance slip through after the user clicked pause. */
+  const pausedRef = useRef(paused)
+  useEffect(() => {
+    pausedRef.current = paused
+  }, [paused])
+
+  const goTo = useCallback(
+    (next, dir) => {
+      setDirection(dir)
+      setActiveIdx(((next % rotating.length) + rotating.length) % rotating.length)
+    },
+    [rotating.length],
+  )
+  const goNext = useCallback(() => goTo(activeIdx + 1, 1), [activeIdx, goTo])
+  const goPrev = useCallback(() => goTo(activeIdx - 1, -1), [activeIdx, goTo])
+
+  /* Single long-lived interval. Tick handler short-circuits via the ref
+   * when paused so toggling pause has immediate effect — no stale-
+   * closure race that lets a queued tick slip through. */
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (pausedRef.current) return
+      setDirection(1)
+      setActiveIdx((i) => (i + 1) % rotating.length)
+    }, AUTO_ADVANCE_MS)
+    return () => clearInterval(id)
+  }, [rotating.length])
+
+  /* Slide animation variants for the rotating slot. */
+  const slideVariants = {
+    enter: (dir) => ({ opacity: 0, x: dir > 0 ? 40 : -40 }),
+    center: { opacity: 1, x: 0 },
+    exit: (dir) => ({ opacity: 0, x: dir > 0 ? -40 : 40 }),
+  }
+
+  const active = rotating[activeIdx]
+
   return (
     <Section id="ecosystem" className="bg-cream-50">
       <SectionHeader
@@ -64,106 +184,100 @@ const Ecosystem = () => {
         lead="Sponsors and registration options are available across every tier. Donations grow the Joshua Cole Harden Scholarship Fund and benefit The First Tee of Phoenix."
       />
 
-      <Stagger className="no-scrollbar mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 scroll-px-5 sm:mt-14 sm:mx-0 sm:grid sm:grid-cols-1 sm:snap-none sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 sm:scroll-px-0 md:grid-cols-2 lg:auto-rows-[260px] lg:grid-cols-6">
-        {ECOSYSTEM?.map((card) => {
-          const Icon = card.icon
-          const href = card.href ?? '/registration'
-          const isCta = Boolean(card.cta)
-          const accent = card.accent === 'gold' ? 'gold' : 'green'
+      <div className="mt-10 grid gap-6 sm:mt-14 sm:gap-7 lg:grid-cols-2">
+        {/* Sticky Platinum — left on desktop, first on mobile. */}
+        {platinum ? (
+          <Link
+            href={platinum.href ?? '/registration'}
+            aria-label={`Choose ${platinum.title} on the registration page`}
+            className="block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
+          >
+            <EcosystemCard card={platinum} />
+          </Link>
+        ) : null}
 
-          return (
-            <StaggerItem
-              key={card.title}
-              className={cn(
-                'w-[80%] flex-none snap-start sm:w-auto sm:flex-initial',
-                card.span ?? 'lg:col-span-2',
-              )}
-            >
-              <Link
-                href={href}
-                aria-label={
-                  card.ctaLabel
-                    ? `${card.ctaLabel} — ${card.title}`
-                    : `Choose ${card.title} on the registration page`
-                }
-                className="block h-full rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
+        {/* Rotating slot — right on desktop, second on mobile. */}
+        <div className="relative">
+          {/* Carousel viewport */}
+          <div className="relative min-h-[260px]" aria-live="polite">
+            <AnimatePresence custom={direction} initial={false} mode="wait">
+              <motion.div
+                key={active.title}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                className="h-full"
               >
-                <MotionCard
-                  glow={accent}
-                  className={cn(baseShell, isCta ? ctaSurface[accent] : infoSurface)}
+                <Link
+                  href={active.href ?? '/registration'}
+                  aria-label={
+                    active.ctaLabel
+                      ? `${active.ctaLabel} — ${active.title}`
+                      : `Choose ${active.title} on the registration page`
+                  }
+                  className="block h-full rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
                 >
-                  <div
-                    className={cn('absolute inset-x-7 top-0 h-[3px]', ACCENT_RULE[accent])}
-                    aria-hidden
-                  />
+                  <EcosystemCard card={active} />
+                </Link>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-                  <div className="flex items-start justify-between gap-4">
-                    <div
-                      className={cn(
-                        'flex h-11 w-11 items-center justify-center rounded-lg border transition-colors duration-300',
-                        isCta
-                          ? ctaIconBg[accent]
-                          : 'border-navy-700 bg-navy-800 group-hover/card:border-navy-600',
-                      )}
-                    >
-                      <Icon
-                        className={cn(
-                          'h-5 w-5',
-                          isCta ? ctaIconColor[accent] : ACCENT_ICON[accent],
-                        )}
-                        strokeWidth={1.5}
-                      />
-                    </div>
-                    {isCta ? (
-                      <span
-                        className={cn(
-                          'inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold tracking-[0.22em] uppercase',
-                          ctaText[accent],
-                        )}
-                      >
-                        {card.ctaLabel ?? 'Choose'}
-                        <ArrowRight className="h-3 w-3" />
-                      </span>
-                    ) : (
-                      <ArrowUpRight
-                        className="text-cream-100/40 group-hover/card:text-cream-50 h-4 w-4 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:translate-x-1 group-hover/card:-translate-y-1"
-                        strokeWidth={1.5}
-                      />
-                    )}
-                  </div>
+          {/* Controls row — prev / dots / play-pause / next */}
+          <div className="mt-5 flex items-center justify-between gap-3">
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label="Previous sponsorship card"
+              className="border-cream-200 text-navy-900 hover:border-gold-400 hover:text-gold-600 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-white transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4" strokeWidth={2} />
+            </button>
 
-                  <div className="mt-6 flex-1">
-                    <p
-                      className={cn(
-                        'font-mono text-[11px] font-semibold tracking-[0.22em] uppercase',
-                        isCta ? ctaText[accent] : 'text-gold-400',
-                      )}
-                    >
-                      {card.sub}
-                    </p>
-                    <h3
-                      className={cn(
-                        'font-display mt-2 text-2xl font-semibold tracking-tight',
-                        isCta ? 'text-navy-900' : 'text-cream-50',
-                      )}
-                    >
-                      {card.title}
-                    </h3>
-                    <p
-                      className={cn(
-                        'mt-3 text-sm leading-relaxed',
-                        isCta ? 'text-mesh-700' : 'text-cream-100/72',
-                      )}
-                    >
-                      {card.description}
-                    </p>
-                  </div>
-                </MotionCard>
-              </Link>
-            </StaggerItem>
-          )
-        })}
-      </Stagger>
+            <div className="flex items-center gap-2">
+              {rotating.map((c, i) => (
+                <button
+                  key={c.title}
+                  type="button"
+                  onClick={() => goTo(i, i > activeIdx ? 1 : -1)}
+                  aria-label={`Show ${c.title}`}
+                  aria-current={i === activeIdx ? 'true' : 'false'}
+                  className={cn(
+                    'h-1.5 rounded-full transition-all duration-300',
+                    i === activeIdx ? 'bg-gold-500 w-6' : 'bg-cream-300 hover:bg-cream-400 w-1.5',
+                  )}
+                />
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setPaused((p) => !p)}
+                aria-label={paused ? 'Resume auto-advance' : 'Pause auto-advance'}
+                className="border-cream-200 text-mesh-600 hover:border-gold-400 hover:text-gold-600 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-white transition-colors"
+              >
+                {paused ? (
+                  <Play className="h-3.5 w-3.5" strokeWidth={2} />
+                ) : (
+                  <Pause className="h-3.5 w-3.5" strokeWidth={2} />
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={goNext}
+                aria-label="Next sponsorship card"
+                className="border-cream-200 text-navy-900 hover:border-gold-400 hover:text-gold-600 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-white transition-colors"
+              >
+                <ChevronRight className="h-4 w-4" strokeWidth={2} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </Section>
   )
 }

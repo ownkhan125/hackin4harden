@@ -123,7 +123,10 @@
       "Bash(node run.js \"C:/Users/Dev/AppData/Local/Temp/h4h-polish.js\")",
       "Bash(rm -f /tmp/h4h-contact.log)",
       "Bash(grep -qE \"Ready in|Error\" /tmp/h4h-contact.log)",
-      "Bash(node run.js \"C:/Users/Dev/AppData/Local/Temp/h4h-contact-flow.js\")"
+      "Bash(node run.js \"C:/Users/Dev/AppData/Local/Temp/h4h-contact-flow.js\")",
+      "Bash(rm -f /tmp/h4h-carousel.log)",
+      "Bash(grep -qE \"Ready in|Error\" /tmp/h4h-carousel.log)",
+      "Bash(node run.js \"C:/Users/Dev/AppData/Local/Temp/h4h-carousel.js\")"
     ]
   }
 }
