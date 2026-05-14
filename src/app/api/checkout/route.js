@@ -82,25 +82,36 @@ const POST = async (req) => {
     if (!priceId)
       return NextResponse.json({ error: `Unknown tier: ${slug}` }, { status: 400 })
 
-    /* Foursome validation first so the player-level errors surface
-     * before the email check. Player 1 also acts as the purchaser, so
-     * we backfill body.purchaser from players[0] if the client didn't
-     * send it explicitly. */
+    /* Foursome — captain-first flow. Player 1 (the captain) is required;
+     * Players 2–4 may be either fully empty (we'll generate JWT invite
+     * tokens after payment so the captain can forward them to teammates)
+     * or fully complete. A partial entry on any slot is a 400. */
     if (regType === 'foursome') {
       const players = Array.isArray(body.players) ? body.players : []
       if (players.length !== 4) {
-        return NextResponse.json({ error: 'Foursome requires 4 players' }, { status: 400 })
+        return NextResponse.json({ error: 'Foursome requires 4 player slots' }, { status: 400 })
       }
-      for (let i = 0; i < 4; i++) {
+      const lead = players[0] ?? {}
+      if (!trim(lead.fullName) || !trim(lead.email) || !trim(lead.phone)) {
+        return NextResponse.json(
+          { error: 'Player 1 (captain) is missing required fields' },
+          { status: 400 },
+        )
+      }
+      for (let i = 1; i < 4; i++) {
         const p = players[i] ?? {}
-        if (!trim(p.fullName) || !trim(p.email) || !trim(p.phone)) {
+        const filled = [p.fullName, p.email, p.phone].map(trim)
+        const someFilled = filled.some((v) => v !== '')
+        const allFilled = filled.every((v) => v !== '')
+        if (someFilled && !allFilled) {
           return NextResponse.json(
-            { error: `Player ${i + 1} is missing required fields` },
+            {
+              error: `Player ${i + 1} has partial info. Either complete name, email, and phone, or clear all three so we send an invite link.`,
+            },
             { status: 400 },
           )
         }
       }
-      const lead = players[0]
       const parts = trim(lead.fullName).split(/\s+/)
       body.purchaser = {
         firstName: trim(body.purchaser?.firstName) || parts[0] || '',

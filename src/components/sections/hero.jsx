@@ -8,6 +8,7 @@ import { ArrowRight, CalendarRange, HandHeart, Heart, MapPin, Phone } from 'luci
 
 import Button from '@/components/ui/button'
 import Container from '@/components/ui/container'
+import CountdownPill from '@/components/ui/countdown-pill'
 
 import { EASE } from '@/constants/motion'
 import { siteConfig } from '@/constants/site'
@@ -165,6 +166,7 @@ const Hero = () => {
               transition={{ duration: 0.9, delay: 0.62, ease: EASE.outSoft }}
               className="border-navy-900/10 text-mesh-600 mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t pt-6 text-xs"
             >
+              <CountdownPill />
               <div className="flex items-center gap-2">
                 <CalendarRange className="text-gold-500 h-3.5 w-3.5" strokeWidth={1.75} />
                 <span className="font-mono tracking-[0.2em] uppercase">7:30 AM Shotgun Start</span>
